@@ -1,0 +1,42 @@
+# Credentials and machine-local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Python environments and caches
+.venv/
+venv/
+env/
+.conda/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Build output and downloadable model weights
+build/
+dist/
+models/
+*.whl
+
+# Local logs, recordings, and temporary files
+logs/
+recordings/
+tmp/
+*.log
+*.wav
+*.pcm
+*.zip
+*.tmp
+
+# Editor and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

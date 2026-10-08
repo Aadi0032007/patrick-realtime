@@ -1,0 +1,37 @@
+# Patrick Realtime
+
+GitHub: https://github.com/Aadi0032007/patrick-realtime.git
+
+For Jetson Linux setup, see [the Jetson guide](docs/jetson-setup.md). `.gitignore` excludes credentials, environments, downloaded model weights, recordings, and build output; `.env.example` and `knowledge/revobots.json` remain versioned.
+
+Standalone CLI voice assistant: Vosk wake/end-of-utterance detection, OpenAI Realtime audio, Revobots PDF RAG, and OpenAI web search. Default voice: Cedar. Short prompt: `patrick/realtime_prompt.txt`.
+
+## Run on this Windows machine
+
+```bat
+cd C:\Users\Aadi\aditya\patrick-realtime
+run.cmd --input-device 2 --output-device 5
+```
+
+Say **Hey Patrick** and ask a question. Follow-ups need no wake phrase until 15 seconds idle. Listening pauses during generation/playback; no barge-in. Ctrl+C exits.
+
+`run.cmd --devices` lists audio devices. `run.cmd --listen-test --input-device 2` tests Vosk offline. Add `--debug-audio` for transcripts and microphone levels. `--text` enables typed chat.
+
+The local `.env` contains only required app settings and the existing OpenAI key. Never commit it. `.env.example` has no secrets. Restart after edits. Web search uses a separate OpenAI Responses request; returned source links print in the terminal. Revobots facts use `knowledge/revobots.json`, the page-numbered extraction of `Revobots_Robot_RAG_Knowledge_Base_Company_Updated.pdf`; the original PDF was not present in the source checkout.
+
+## Fresh environment
+
+```bat
+python -m venv .venv
+.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+This machine's environment may inherit installed packages from the existing base Python. For a portable installation, use the fresh-environment steps. No Qwen, Chatterbox, Ollama, or source-project imports are required.
+
+## Tests
+
+```bat
+.venv\Scripts\python.exe -m unittest discover -s tests
+```
+
+Live API/audio behavior needs an interactive test. Network disconnects end the session; rerun to reconnect.

@@ -1,0 +1,1 @@
+"""Patrick Realtime voice assistant."""
