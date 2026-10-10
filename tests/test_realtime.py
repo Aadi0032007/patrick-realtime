@@ -154,7 +154,7 @@ class RealtimeTests(unittest.TestCase):
         chat(ws, "Be concise", read=lambda _: "/quit", output=io.StringIO())
         self.assertEqual(len(ws.sent), 1)
         self.assertTrue(ws.sent[0]["session"]["instructions"].startswith("Be concise"))
-        self.assertIn("Perform tool calls silently", system_instructions())
+        self.assertIn("Tool acknowledgments:", system_instructions())
 
     def test_api_error(self):
         ws = Socket([{"type": "error", "error": {"message": "Quota exceeded"}}])
