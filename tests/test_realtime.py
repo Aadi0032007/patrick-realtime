@@ -18,6 +18,21 @@ class Socket:
 
 
 class RealtimeTests(unittest.TestCase):
+    def test_name_argument_configures_offline_greetings(self):
+        from patrick.realtime import main
+        with patch('sys.argv', ['patrick.realtime', '--name', 'Jarvis', '--listen-test']), \
+             patch('patrick.realtime.load_env'), \
+             patch('patrick.realtime_capture.listen_test') as listen:
+            main()
+        self.assertEqual(listen.call_args.args[2], ('hey jarvis', 'hi jarvis', 'hello jarvis'))
+        self.assertEqual(listen.call_args.kwargs['name'], 'jarvis')
+
+    def test_custom_name_changes_prompt_identity(self):
+        with patch.dict('os.environ', {'OPENAI_REALTIME_INSTRUCTIONS': ''}):
+            prompt = system_instructions('jarvis')
+        self.assertIn('You are Jarvis', prompt)
+        self.assertNotIn('You are Patrick', prompt)
+
     def test_web_and_pdf_tools_are_both_available(self):
         from patrick.tools import OpenAISearchTools
         ws = Socket([{"type": "session.updated"}])

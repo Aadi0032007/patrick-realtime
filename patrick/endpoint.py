@@ -7,13 +7,27 @@ def normalize(text: str) -> str:
 
 
 
+def wake_phrases(name="patrick"):
+    name = normalize(name)
+    if not name:
+        raise ValueError("Name must contain English letters or numbers.")
+    return tuple(f"{greeting} {name}" for greeting in ("hey", "hi", "hello"))
+
+
 class PhraseWakeDetector:
     """Local ASR phrase spotting; replaceable with a dedicated acoustic detector."""
-    def __init__(self, phrase: str):
-        self.phrase = normalize(phrase)
+    def __init__(self, phrase):
+        self.phrases = tuple(normalize(item) for item in ([phrase] if isinstance(phrase, str) else phrase))
+        if not self.phrases or any(not item for item in self.phrases):
+            raise ValueError("Wake phrase cannot be empty.")
+        self.phrase = self.phrases[0]
+
+    def match(self, text):
+        text = f" {normalize(text)} "
+        return next((phrase for phrase in self.phrases if f" {phrase} " in text), None)
 
     def detect(self, text: str) -> bool:
-        return f" {self.phrase} " in f" {normalize(text)} "
+        return self.match(text) is not None
 
 
 class Endpoint:

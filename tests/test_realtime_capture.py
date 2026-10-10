@@ -19,6 +19,40 @@ class Recognizer:
 
 
 class VoskTurnTests(unittest.TestCase):
+    def test_all_greetings_wake_and_complete_question(self):
+        for greeting in ("hey", "hi", "hello"):
+            with self.subTest(greeting=greeting):
+                gate = VoskTurn(Recognizer([(True, f"{greeting} patrick what time is it")]))
+                self.assertEqual(gate.feed(b"aa"), b"aa")
+
+    def test_all_greetings_alone_wait_for_question(self):
+        for greeting in ("hey", "hi", "hello"):
+            with self.subTest(greeting=greeting):
+                gate = VoskTurn(Recognizer([(True, f"{greeting} patrick"), (True, "tell me a joke")]))
+                self.assertIsNone(gate.feed(b"aa"))
+                self.assertEqual(gate.feed(b"bb"), b"aabb")
+
+    def test_custom_name_replaces_default_and_stop(self):
+        gate = VoskTurn(Recognizer([(True, "hello patrick"), (True, "hi jarvis"),
+                                   (False, "stop jarvis")]), name="jarvis")
+        self.assertIsNone(gate.feed(b"aa"))
+        self.assertFalse(gate.active)
+        self.assertIsNone(gate.feed(b"bb"))
+        self.assertTrue(gate.active)
+        with self.assertRaises(ConversationStopped):
+            gate.feed(b"cc")
+
+    def test_alternate_greeting_with_stop_is_local(self):
+        gate = VoskTurn(Recognizer([(True, "hello jarvis stop jarvis")]), name="jarvis")
+        with self.assertRaises(ConversationStopped):
+            gate.feed(b"aa")
+
+    def test_explicit_wake_override_is_preserved(self):
+        gate = VoskTurn(Recognizer([(True, "hi jarvis"), (True, "computer tell me a joke")]),
+                        wake_phrase="computer", name="jarvis")
+        self.assertIsNone(gate.feed(b"aa"))
+        self.assertEqual(gate.feed(b"bb"), b"aabb")
+
     def test_stop_closes_open_conversation_and_discards_audio(self):
         gate = VoskTurn(Recognizer([(False, "stop patrick"), (True, "another question")]), require_wake=False)
         with self.assertRaises(ConversationStopped):

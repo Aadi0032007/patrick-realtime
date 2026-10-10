@@ -3,6 +3,7 @@ import argparse
 import base64
 import json
 import os
+import re
 import sys
 import threading
 from urllib.parse import quote
@@ -12,15 +13,15 @@ from .realtime_playback import AudioPlayback
 from pathlib import Path
 
 
-def system_instructions():
+def system_instructions(name="patrick"):
     override = os.getenv("OPENAI_REALTIME_INSTRUCTIONS", "").strip()
     if override:
-        return override
+        return re.sub(r"\bPatrick\b", lambda match: name.title(), override, flags=re.I)
     path = Path(__file__).with_name("realtime_prompt.txt")
     prompt = path.read_text(encoding="utf-8").strip()
     if not prompt:
         raise ValueError("System prompt file is empty.")
-    return prompt
+    return re.sub(r"\bPatrick\b", lambda match: name.title(), prompt, flags=re.I)
 
 
 def receive(ws):
@@ -90,11 +91,11 @@ def continue_tools(ws, response, knowledge, modality, rounds, search=None):
     return True
 
 
-def respond(ws, text, output=sys.stdout, knowledge=None, search=None):
+def respond(ws, text, output=sys.stdout, knowledge=None, search=None, name="patrick"):
     ws.send(json.dumps({"type": "conversation.item.create", "item": {
         "type": "message", "role": "user", "content": [{"type": "input_text", "text": text}]}}))
     ws.send(json.dumps({"type": "response.create", "response": {"output_modalities": ["text"]}}))
-    output.write("Patrick: ")
+    output.write(f"{name.title()}: ")
     output.flush()
     rounds = 0
     try:
@@ -117,7 +118,7 @@ def respond(ws, text, output=sys.stdout, knowledge=None, search=None):
         output.flush()
 
 
-def chat(ws, instructions, read=input, output=sys.stdout, knowledge=None, search=None):
+def chat(ws, instructions, read=input, output=sys.stdout, knowledge=None, search=None, name="patrick"):
     configure(ws, instructions, knowledge=knowledge, search=search)
     print("Connected. Type a message; /quit to exit. Ctrl+C stops the session.", file=output)
     while True:
@@ -128,11 +129,11 @@ def chat(ws, instructions, read=input, output=sys.stdout, knowledge=None, search
         if text.lower() in ("/quit", "/exit"):
             return
         if text:
-            respond(ws, text, output, knowledge=knowledge, search=search)
+            respond(ws, text, output, knowledge=knowledge, search=search, name=name)
 
 
 def voice_chat(ws, instructions, input_device=None, output_device=None,
-               vosk_model="models/vosk-model", wake_phrase="hey patrick", debug=False, knowledge=None, search=None):
+               vosk_model="models/vosk-model", wake_phrase=None, debug=False, knowledge=None, search=None, name="patrick"):
     try:
         import sounddevice as sd
     except ImportError:
@@ -141,13 +142,16 @@ def voice_chat(ws, instructions, input_device=None, output_device=None,
     model, recognizer_factory = load_vosk(vosk_model)
     print("Input:", sd.query_devices(input_device, "input")["name"])
     print("Output:", sd.query_devices(output_device, "output")["name"])
-    configure(ws, instructions + f" The phrase {wake_phrase} is only your wake phrase; answer the question that follows it.", voice=True, knowledge=knowledge, search=search)
+    from .endpoint import wake_phrases
+    phrases = wake_phrase or wake_phrases(name)
+    phrase_text = phrases if isinstance(phrases, str) else ' / '.join(phrases)
+    configure(ws, instructions + f" Wake phrases: {phrase_text}. Answer the question that follows the greeting.", voice=True, knowledge=knowledge, search=search)
     print("Connected. AI-generated voice. Use headphones to avoid echo.")
     print("Vosk detects the wake phrase and end of each utterance. Ctrl+C stops.")
     require_wake = True
     while True:
         try:
-            audio = capture_turn(sd, model, recognizer_factory, input_device, wake_phrase, debug=debug, require_wake=require_wake)
+            audio = capture_turn(sd, model, recognizer_factory, input_device, phrases, debug=debug, require_wake=require_wake, name=name)
         except TimeoutError as exc:
             print(exc)
             require_wake = True
@@ -158,7 +162,7 @@ def voice_chat(ws, instructions, input_device=None, output_device=None,
                                 "audio": base64.b64encode(audio[start:start + 24000]).decode()}))
         ws.send(json.dumps({"type": "input_audio_buffer.commit"}))
         ws.send(json.dumps({"type": "response.create", "response": {"output_modalities": ["audio"]}}))
-        print("Patrick: ", end="", flush=True)
+        print(f"{name.title()}: ", end="", flush=True)
         rounds = 0
         with AudioPlayback(sd, output_device) as speaker:
             while True:
@@ -190,12 +194,20 @@ def main():
     parser.add_argument("--input-device", type=int, help="Sounddevice microphone index")
     parser.add_argument("--output-device", type=int, help="Sounddevice speaker index")
     parser.add_argument("--vosk-model", default="models/vosk-model", help="Local Vosk model directory")
-    parser.add_argument("--wake-phrase", default="hey patrick")
+    parser.add_argument("--name", default="patrick", help="Assistant name; default patrick. Enables hey/hi/hello NAME and stop NAME.")
+    parser.add_argument("--wake-phrase", default=None, help="Override the default hey/hi/hello NAME greetings with one custom phrase")
     parser.add_argument("--debug-audio", action="store_true", help="Print local Vosk transcripts and microphone levels")
     parser.add_argument("--listen-test", action="store_true", help="Test microphone, wake phrase, and endpoint locally without OpenAI")
     parser.add_argument("--devices", action="store_true", help="List available audio devices and exit")
     parser.add_argument("--knowledge", default=None, help="Combined knowledge JSON index; defaults to RAG_KNOWLEDGE_FILE or knowledge/combined.json")
     args = parser.parse_args()
+    from .endpoint import normalize, wake_phrases
+    args.name = normalize(args.name)
+    if not args.name:
+        parser.error("--name must contain English letters or numbers")
+    phrases = args.wake_phrase if args.wake_phrase is not None else wake_phrases(args.name)
+    if isinstance(phrases, str) and not normalize(phrases):
+        parser.error("--wake-phrase cannot be empty")
     try:
         load_env(args.env_file)
         if args.devices:
@@ -204,7 +216,7 @@ def main():
             return
         if args.listen_test:
             from .realtime_capture import listen_test
-            listen_test(args.vosk_model, args.input_device, args.wake_phrase)
+            listen_test(args.vosk_model, args.input_device, phrases, name=args.name)
             return
         key = os.getenv("OPENAI_API_KEY", "").strip()
         if not key:
@@ -214,7 +226,7 @@ def main():
         except ImportError:
             raise ValueError('Install Realtime support with: python -m pip install -e ".[realtime]"') from None
         model = args.model or os.getenv("OPENAI_REALTIME_MODEL", "gpt-realtime-2.1")
-        instructions = system_instructions()
+        instructions = system_instructions(args.name)
         from .knowledge import KnowledgeBase
         knowledge_path = args.knowledge or os.getenv("RAG_KNOWLEDGE_FILE", "knowledge/combined.json")
         knowledge = KnowledgeBase(knowledge_path)
@@ -232,9 +244,9 @@ def main():
                      open_timeout=30, ping_interval=20, ping_timeout=60,
                      max_queue=128, max_size=4 * 1024 * 1024) as ws:
             if args.text:
-                chat(ws, instructions, knowledge=knowledge, search=search)
+                chat(ws, instructions, knowledge=knowledge, search=search, name=args.name)
             else:
-                voice_chat(ws, instructions, args.input_device, args.output_device, args.vosk_model, args.wake_phrase, args.debug_audio, knowledge=knowledge, search=search)
+                voice_chat(ws, instructions, args.input_device, args.output_device, args.vosk_model, phrases, args.debug_audio, knowledge=knowledge, search=search, name=args.name)
     except KeyboardInterrupt:
         print("\nPatrick stopped.")
     except Exception as exc:

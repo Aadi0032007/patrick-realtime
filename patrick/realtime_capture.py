@@ -8,14 +8,15 @@ import struct
 import time
 from pathlib import Path
 
-from .endpoint import PhraseWakeDetector, normalize
+from .endpoint import PhraseWakeDetector, normalize, wake_phrases
 
 
 class VoskTurn:
     """Keep pre-roll, activate on a wake phrase, finish on Vosk's final result."""
-    def __init__(self, recognizer, wake_phrase="hey patrick", rate=24000, require_wake=True):
+    def __init__(self, recognizer, wake_phrase=None, rate=24000, require_wake=True, name="patrick"):
         self.recognizer = recognizer
-        self.wake = PhraseWakeDetector(wake_phrase)
+        self.wake = PhraseWakeDetector(wake_phrase or wake_phrases(name))
+        self.stop_phrase = "stop " + normalize(name)
         self.rate = rate
         self.reset()
         self.active = not require_wake
@@ -39,12 +40,13 @@ class VoskTurn:
         previous_text = self.last_text
         self.last_text, self.last_final = text, final
         command = text
-        if command.startswith(self.wake.phrase + " "):
-            command = command[len(self.wake.phrase) + 1:]
+        matched = self.wake.match(text)
+        if matched and command.startswith(matched + " "):
+            command = command[len(matched) + 1:]
         # Close locally before command audio is sent to OpenAI.
-        if (self.active or self.wake.detect(text)) and command == "stop patrick":
+        if (self.active or matched) and command == self.stop_phrase:
             self.reset()
-            raise ConversationStopped("Conversation closed. Say Hey Patrick to reopen it.")
+            raise ConversationStopped(f'Conversation closed. Say "{self.wake.phrase}" to reopen it.')
         if not self.active:
             if not self.wake.detect(text):
                 return None
@@ -54,8 +56,7 @@ class VoskTurn:
             self.chunks.append(pcm)
         self.duration += len(pcm) / (self.rate * 2)
         self.idle += len(pcm) / (self.rate * 2)
-        _, found, after = text.partition(self.wake.phrase)
-        content = after.strip() if found else text
+        content = text.partition(matched)[2].strip() if matched else text
         if content:
             if not self.question:
                 self.chunks = list(self.pre_roll)
@@ -70,11 +71,11 @@ class VoskTurn:
             return audio
         if self.idle >= 15:
             self.reset()
-            raise IdleExpired("15 seconds idle. Say Hey Patrick to reopen the conversation.")
+            raise IdleExpired(f'15 seconds idle. Say "{self.wake.phrase}" to reopen the conversation.')
         if self.duration >= 30:
             # Never send a truncated or wake-only turn automatically.
             self.reset()
-            raise TimeoutError("No completed question detected. Say Hey Patrick and try again.")
+            raise TimeoutError(f'No completed question detected. Say "{self.wake.phrase}" and try again.')
         return None
 
 
@@ -91,8 +92,8 @@ class ConversationStopped(TimeoutError):
     """Local command that returns the voice loop to wake-only mode."""
 
 
-def capture_turn(sd, model, recognizer_factory, input_device, wake_phrase, debug=False, require_wake=True):
-    gate = VoskTurn(recognizer_factory(model, 24000), wake_phrase, require_wake=require_wake)
+def capture_turn(sd, model, recognizer_factory, input_device, wake_phrase, debug=False, require_wake=True, name="patrick"):
+    gate = VoskTurn(recognizer_factory(model, 24000), wake_phrase, require_wake=require_wake, name=name)
     frames = queue.Queue(maxsize=100)
     overflow = threading.Event()
 
@@ -104,8 +105,9 @@ def capture_turn(sd, model, recognizer_factory, input_device, wake_phrase, debug
         except queue.Full:
             overflow.set()
 
-    print(f'Listening locally. Say "{wake_phrase}" and your question. Ctrl+C exits.' if require_wake
-          else 'Conversation open. Ask a follow-up; say "stop patrick" to close (or wait 15 seconds idle).', flush=True)
+    phrases = ' / '.join(gate.wake.phrases)
+    print(f'Listening locally. Say {phrases} and your question. Ctrl+C exits.' if require_wake
+          else f'Conversation open. Ask a follow-up; say "{gate.stop_phrase}" to close (or wait 15 seconds idle).', flush=True)
     with sd.RawInputStream(samplerate=24000, channels=1, dtype="int16", blocksize=480,
                            device=input_device, callback=capture):
         announced = not require_wake
@@ -136,7 +138,7 @@ def capture_turn(sd, model, recognizer_factory, input_device, wake_phrase, debug
                 return audio
 
 
-def listen_test(model_path, input_device=None, wake_phrase="hey patrick"):
+def listen_test(model_path, input_device=None, wake_phrase=None, name="patrick"):
     import sounddevice as sd
     model, recognizer_factory = load_vosk(model_path)
     print("Offline microphone/Vosk test. No audio is sent to OpenAI.")
@@ -144,7 +146,7 @@ def listen_test(model_path, input_device=None, wake_phrase="hey patrick"):
     require_wake = True
     while True:
         try:
-            audio = capture_turn(sd, model, recognizer_factory, input_device, wake_phrase, debug=True, require_wake=require_wake)
+            audio = capture_turn(sd, model, recognizer_factory, input_device, wake_phrase, debug=True, require_wake=require_wake, name=name)
             print(f"Turn detected: {len(audio) / 48000:.2f} seconds. Wake and endpoint worked.")
             require_wake = False
         except TimeoutError as exc:
