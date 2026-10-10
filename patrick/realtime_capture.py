@@ -38,6 +38,13 @@ class VoskTurn:
         text = normalize(result.get("text" if final else "partial", ""))
         previous_text = self.last_text
         self.last_text, self.last_final = text, final
+        command = text
+        if command.startswith(self.wake.phrase + " "):
+            command = command[len(self.wake.phrase) + 1:]
+        # Close locally before command audio is sent to OpenAI.
+        if (self.active or self.wake.detect(text)) and command == "stop patrick":
+            self.reset()
+            raise ConversationStopped("Conversation closed. Say Hey Patrick to reopen it.")
         if not self.active:
             if not self.wake.detect(text):
                 return None
@@ -80,6 +87,10 @@ class IdleExpired(TimeoutError):
     pass
 
 
+class ConversationStopped(TimeoutError):
+    """Local command that returns the voice loop to wake-only mode."""
+
+
 def capture_turn(sd, model, recognizer_factory, input_device, wake_phrase, debug=False, require_wake=True):
     gate = VoskTurn(recognizer_factory(model, 24000), wake_phrase, require_wake=require_wake)
     frames = queue.Queue(maxsize=100)
@@ -94,7 +105,7 @@ def capture_turn(sd, model, recognizer_factory, input_device, wake_phrase, debug
             overflow.set()
 
     print(f'Listening locally. Say "{wake_phrase}" and your question. Ctrl+C exits.' if require_wake
-          else "Conversation open. Ask a follow-up (15 seconds idle closes it).", flush=True)
+          else 'Conversation open. Ask a follow-up; say "stop patrick" to close (or wait 15 seconds idle).', flush=True)
     with sd.RawInputStream(samplerate=24000, channels=1, dtype="int16", blocksize=480,
                            device=input_device, callback=capture):
         announced = not require_wake

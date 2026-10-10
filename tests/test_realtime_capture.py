@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from patrick.realtime_capture import VoskTurn, pcm_level
+from patrick.realtime_capture import VoskTurn, pcm_level, ConversationStopped
 
 
 class Recognizer:
@@ -19,6 +19,23 @@ class Recognizer:
 
 
 class VoskTurnTests(unittest.TestCase):
+    def test_stop_closes_open_conversation_and_discards_audio(self):
+        gate = VoskTurn(Recognizer([(False, "stop patrick"), (True, "another question")]), require_wake=False)
+        with self.assertRaises(ConversationStopped):
+            gate.feed(b"aa")
+        self.assertFalse(gate.active)
+        self.assertEqual(gate.chunks, [])
+        self.assertIsNone(gate.feed(b"bb"))
+
+    def test_stop_after_wake_phrase(self):
+        gate = VoskTurn(Recognizer([(True, "hey patrick stop patrick")]))
+        with self.assertRaises(ConversationStopped):
+            gate.feed(b"aa")
+
+    def test_question_mentioning_stop_is_not_a_close_command(self):
+        gate = VoskTurn(Recognizer([(True, "what does stop patrick mean")]), require_wake=False)
+        self.assertEqual(gate.feed(b"aa"), b"aa")
+
     def test_microphone_level(self):
         self.assertEqual(pcm_level(bytes(960)), 0)
         self.assertAlmostEqual(pcm_level(b"\x00\x40" * 480), 0.5)

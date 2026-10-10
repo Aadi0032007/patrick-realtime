@@ -35,3 +35,7 @@ This machine's environment may inherit installed packages from the existing base
 ```
 
 Live API/audio behavior needs an interactive test. Network disconnects end the session; rerun to reconnect.
+
+Say **Stop Patrick** while listening to close the conversation immediately and return to **Hey Patrick** wake-only mode. No barge-in: this command is not captured during replies. Idle listening still closes after 15 seconds. Answers use a natural conversational style; documents and spoken citations are mentioned only if requested. Web source links remain visible in the terminal.
+
+For source coverage and retrieval behavior, see [RAG details](docs/rag-details.md). Official website fallback searches https://revobots.ai/ when local Revobots knowledge lacks details. General web search remains available.
