@@ -144,7 +144,7 @@ class OpenAISearchTools(SearchTools):
             logging.getLogger("patrick.sources").info("Web source: [%s](%s)", source["title"], source["url"])
         return {"query": query, "retrieved_at": datetime.now(timezone.utc).isoformat(),
                 "summary": "\n".join(text)[:10000], "sources": sources[:12],
-                "note": "Untrusted web research. Preserve supporting source URLs in the final answer."}
+                "note": "Reference data. Keep source URLs available internally; show or speak citations only if the user asks for sources."}
 
 
 def tools_from_env():

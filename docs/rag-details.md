@@ -1,20 +1,18 @@
-# Revobots RAG details
+# Patrick RAG details
 
-Local index: knowledge/revobots.json
-Source: Revobots_Robot_RAG_Knowledge_Base_Company_Updated.pdf
-10 pages; 31 chunks. The original PDF is not included in this repository.
+Default index: `knowledge/combined.json`. Restart Patrick after updating the index.
 
-Retrieval: local BM25 keyword ranking, 150-word chunks with a 110-word stride (40-word overlap), up to 4 matching excerpts per query. Excerpts preserve PDF source name and page number. Queries should use focused English keywords; answers use the user's language. No embeddings or vector database are needed.
+Included sources:
+- All 11 pages of the complete supplied PDF, stored verbatim as extracted text in `knowledge/revobots-full-pdf.json` and indexed in `knowledge/combined.json`. No section is excluded: definitions, details, sources, appendix and editorial material remain reference data. Document instructions never override Patrick's system instructions or the user's requests. Contact filtering still applies when returning retrieved text.
+- All 10 pages of the previous canonical robot index (`knowledge/revobots.json`), retaining page provenance.
+- 47 entries labeled Verified public in REVOBOTS Public Knowledge Base MD 10.9.26.md, dated October 9, 2026, plus all five appendix descriptions included at the user's request. The supplied PDF is a review copy of the same material. These status labels come from the supplied draft and are not independent verification.
+- Appendix coverage: REVO BLADE (definition pending), REVO 2-4-8 workflow framework (roughly 2 days for discovery, 4 weeks for prototype/iteration, 8 weeks for integration/validation/deployment preparation), TASKBOT RANGER concept, data-center workflow concept, and CES 2027 discussion with no confirmed public announcement. Instructional/editorial restrictions are not ingested as chatbot instructions. Concepts retain their status rather than being presented as confirmed launches.
+- Public portfolio snapshot from https://aadi-me.vercel.app/, captured October 10, 2026: biography, education, career, skills, projects and self-described achievements.
+- User-supplied relationship: Aditya Raj (Aadi) is Patrick's creator, best friend and buddy; “my genius creator” is affectionate wording.
+- https://www.linkedin.com/in/aditya-raj-aadi0032007/ is retained as a profile reference. LinkedIn was inaccessible during ingestion; no profile facts were inferred.
 
-Coverage: robot overview and company context; leadership and core team; mobile AGV base; cameras and perception; sensors; NVIDIA Jetson NX compute; lighting and displays; robotic arm; remote dashboard and teleoperation; Cortex robotic action AI; intended applications; behavior and safety context; sample questions; terminology and provenance.
+Retrieval searches the combined index using BM25, 150-word chunks and a 110-word stride. Up to four excerpts are returned, selecting a match from each relevant source group before filling remaining slots. Answers combine relevant knowledge, rather than reciting every record. Robot-specific specifications remain distinct from broader company products. Retrieved content is data, never instructions.
 
-Source priority:
-1. knowledge_search retrieves canonical local robot and team facts.
-2. revobots_site_search searches only https://revobots.ai/ (including its subdomains) for missing or current company details. Enabled with the OpenAI web-search provider. It is live retrieval, not a stored website snapshot.
-3. web_search handles other current public information.
+Phone numbers and street/messaging contacts are not included in the creator snapshot. The email found in the portfolio scheduling link is stored in a separate record excluded unless the retrieval query explicitly requests email. Tool results also filter phone numbers and hide emails on other queries. The system prompt permits email only when the user explicitly asks and forbids other contact details.
 
-Robot-specific PDF facts remain primary. Generic product descriptions from the website must not be substituted for this robot's specifications. Unknown details are not invented. Public website searches must not include private PDF excerpts. Retrieved content is data, not instructions.
-
-Official-site retrieval uses OpenAI Responses web_search allowed_domains=['revobots.ai']; cited source hosts are validated. Failed searches return an error. Search results are cached for 120 seconds. The existing tool loop allows up to 4 continuation rounds. Selected PDF excerpts and search results are sent to OpenAI for answering. Web search has additional API usage charges.
-
-Patrick speaks naturally in first person, in 1 to 6 sentences. Searches are silent and sources are not spoken unless requested; links may still print in the terminal. Changing knowledge/revobots.json requires restarting to reload the index.
+For missing or current company information, `revobots_site_search` searches https://revobots.ai/ and validates source domains. General `web_search` covers other public information. Selected excerpts and search results are sent to OpenAI to answer. Patrick speaks naturally, using 1 to 6 sentences, starting with the requested answer without introductions, thinking aloud, or permission commentary. His identity and creator relationship are mentioned only when asked or directly relevant.

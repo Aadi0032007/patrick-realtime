@@ -1,0 +1,952 @@
+{
+  "source": "Patrick combined knowledge: canonical robot, public Revobots, and creator portfolio",
+  "records": [
+    {
+      "id": "robot-page-1",
+      "source": "Revobots_Robot_RAG_Knowledge_Base_Company_Updated.pdf",
+      "page": 1,
+      "group": "robot",
+      "text": "Revobots Robot\nTechnical Knowledge Base\nRAG-ready reference for open-source documentation, retrieval systems, and robot-facing Q&A\nPurpose. This document is a canonical factual reference for the robot and its major subsystems. \nIt is written to support retrieval-augmented generation (RAG), technical onboarding, and open-\nsource documentation.\n1. Robot Overview\nThe robot is a property of Revobots. It combines a mobile AGV base, multiple cameras and sensors, \nonboard NVIDIA Jetson NX compute, lighting and display systems, and a single 7-DOF robotic arm. \nThe platform supports both manual teleoperation and AI-controlled operation.\nField Canonical value\nOwner / organization Revobots\nChief Mechanical Officer Mike Phillips\nCEO Dr. Giby Raphael\nChief Artificial Intelligence Officer Dr. Rahul Khanna\nRobot creator / built by Aditya — creator and friend of the robot\nOnboard compute NVIDIA Jetson NX\nPrimary AI model Cortex\nAI model spelling C-O-R-T-E-X\nChief Operating Officer Andre Christian\nHeart of Revobots Ranjy Thomas\n1.1 About Revobots\nREVOBOTS is an Arizona-based AI-driven robotics company focused on Physical AI and task-\nadaptive robotics: robots are designed around specific jobs and real operating workflows rather \nthan as one fixed-purpose machine. The company combines task-specific robotic hardware, AI-",
+      "status": "project canonical robot reference"
+    },
+    {
+      "id": "robot-page-2",
+      "source": "Revobots_Robot_RAG_Knowledge_Base_Company_Updated.pdf",
+      "page": 2,
+      "group": "robot",
+      "text": "driven orchestration, human-in-the-loop oversight, rapid customization, and scalable deployment \nmodels to address labor shortages while keeping people in supervisory and decision-making roles.\nRevobots emphasizes practical deployment in human-centered environments. Its public materials \ndescribe 3D-printed and modular robot construction, edge intelligence, remote human oversight, \nrapid task adaptation, and Robots-as-a-Service (RaaS) as core parts of its approach. The company \npositions robotics as a way to elevate human capability, improve safety, and cover work that is dull, \ndangerous, dirty, dexterous, difficult to staff, or operationally repetitive.\nKey company platforms and concepts include the TASKBOT family, REVO PILOTS for human-in-the-\nloop fleet oversight and teleoperation, and REVOCORTEX / REVO CORTEX as an edge-intelligence and \nrobotic orchestration stack. Internal project usage may shorten this to “Cortex” when referring to \nthe robot-action AI used by this robot.\n1.2 Leadership and Core Team\nFor this robot knowledge base, the following roles are canonical. These role labels follow the project \nowner’s supplied information even where public website material may use a different corporate \ntitle.\nPerson Canonical role Background / expertise\nDr. Giby Raphael CEO of Revobots Vision leadership; former Intel \nCOO of Robotics & IoT; PhD in \nRobotics; DARPA program \nleadership.\nAndre Christian Chief Operating Officer of \nRevobots\nBrand, growth, and operations \nstrategist; former Toshiba \ndirector; automation expertise.\nDr. Rahul Khanna Chief Artificial Intelligence \nOfficer of Revobots\nAI leadership; 85 AI patents; \nformer Intel AI architect; \nmultimodal ML expertise; AI \nauthor.\nMike Phillips Chief Mechanical Officer of \nRevobots\nIndustrial systems expert; \nadvanced mechatronics for \nrapid/direct digital \nmanufacturing; microfactory \narchitecture.\nRanjy Thomas The heart of Revobots; \nstrategic leadership\nSerial entrepreneur; C-suite \nstrategy expert; Fortune 500 \nadvisor; former Nextel; three \nexits.\nAditya Robot creator and friend Built this robot and is \nidentified prominently by the \nrobot as its creator and friend.",
+      "status": "project canonical robot reference"
+    },
+    {
+      "id": "robot-page-3",
+      "source": "Revobots_Robot_RAG_Knowledge_Base_Company_Updated.pdf",
+      "page": 3,
+      "group": "robot",
+      "text": "2. Mobile Base / AGV\nThe mobile base is an AGV that is driven in a car-like manner. It can be operated manually or \ncontrolled by AI. The drivetrain is rear-wheel drive.\nField Canonical value\nPlatform type AGV / mobile robotic base\nDrive behavior Car-like driving\nDrive configuration Rear-wheel drive\nControl modes Manual teleoperation and AI-controlled operation\nManual drive controller 8-bit two controller\n3. Cameras and Perception\nThe robot has four cameras. Each camera has a distinct operational or data role.\nField Canonical value\nCamera count 4\nCamera 1 Front drive camera\nCamera 2 Rear camera\nCamera 3 Orbital camera\nCamera 4 AI and data-recording camera\n4. Sensors\nField Canonical value\nGPS Present\nLiDAR Present\nTemperature sensor Present\nHumidity sensor Present\n5. Compute, Lighting, and Displays\n5.1 Onboard Compute\nThe robot runs on an NVIDIA Jetson NX, which provides onboard compute for AI and robotic \nfunctions.",
+      "status": "project canonical robot reference"
+    },
+    {
+      "id": "robot-page-4",
+      "source": "Revobots_Robot_RAG_Knowledge_Base_Company_Updated.pdf",
+      "page": 4,
+      "group": "robot",
+      "text": "5.2 Lighting\n Strobe light\n Parking light\n Police light\n Indicator lights\n5.3 Displays\nThe robot has two displays. Both displays use HDMI connections.\n6. Robotic Arm\nThe robot includes one robotic arm. The arm has 7 degrees of freedom (DOF) when the gripper is \nincluded. It can be controlled by AI or teleoperated manually.\nField Canonical value\nArm count 1\nDegrees of freedom 7 DOF including the gripper\nMotor count 6 motors\nGripper count 1 gripper\nPayload range 2.5 kg to 5 kg\nControl modes AI-controlled and manual teleoperation\n7. Remote Dashboard and Teleoperation\nUsers can view and control the robot through the Revobots dashboard. The dashboard provides \nremote visibility of the robot and supports robot control. Manual driving is performed using an 8-bit \ntwo controller.\n8. Cortex Robotic Action AI\nRevobots uses an in-house model named Cortex (C-O-R-T-E-X) for robotic-action AI. Cortex is the \ndesignated model for AI-driven robotic actions on the platform, including actions involving the \nmobile base and robotic arm when AI control is enabled.\n9. Canonical RAG Facts\nThe following statements are intentionally short and explicit so they can be chunked and retrieved \nindependently by a RAG system.\n The robot is a property of Revobots.\n Mike Phillips is the Chief Mechanical Officer of Revobots and the mechanical lead for the robot.\n Dr. Giby Raphael is the CEO of Revobots.\n Dr. Rahul Khanna is the Chief Artificial Intelligence Officer of Revobots.",
+      "status": "project canonical robot reference"
+    },
+    {
+      "id": "robot-page-5",
+      "source": "Revobots_Robot_RAG_Knowledge_Base_Company_Updated.pdf",
+      "page": 5,
+      "group": "robot",
+      "text": " Andre Christian is the Chief Operating Officer of Revobots.\n Ranjy Thomas is the heart of Revobots and contributes strategic leadership.\n Aditya is the robot’s creator and friend. He built the robot.\n The robot uses an AGV mobile base.\n The AGV drives in a car-like manner and uses rear-wheel drive.\n The AGV can be driven manually or controlled by AI.\n The robot has four cameras: a front drive camera, rear camera, orbital camera, and an AI/data-\nrecording camera.\n The robot has GPS, LiDAR, temperature, and humidity sensing.\n The robot runs on an NVIDIA Jetson NX.\n The robot has a strobe light, parking light, police light, and indicator lights.\n The robot has two HDMI-connected displays.\n The robot has one robotic arm.\n The arm is 7 DOF including the gripper.\n The arm has six motors and one gripper.\n The arm payload is between 2.5 kg and 5 kg.\n The arm supports AI control and manual teleoperation.\n Users can view and control the robot through the Revobots dashboard.\n Manual robot driving uses an 8-bit two controller.\n The in-house robotic-action AI model is called Cortex, spelled C-O-R-T-E-X.\nAditya is the robot’s creator and friend.\nHumans are the robot’s friends, and the robot is designed not to hurt humans.\nHuman safety takes priority over task completion.\nThe robot follows the Revobots Kepler Law of Robotics safety principle as defined in this document.\nThe robot can support security, warehouse, industrial, household-chore, and personal-assistant \ntasks.\nFuture upgrades are intended to support deployment in hospitals and other critical or difficult-to-\nreach environments after appropriate testing, validation, and safety approval.\n10. Applications and Intended Tasks\nThe robot is a general-purpose mobile manipulator designed to support useful tasks around people \nand workspaces. Its mobile AGV base, cameras, sensors, onboard AI compute, dashboard access, and \n7-DOF arm allow it to combine navigation, observation, interaction, and object-handling functions.\nCurrent and intended application areas include security and patrol assistance, warehouses and \nlogistics environments, industrial facilities, household chores, and personal-assistant tasks. Specific \ndeployments should use task-appropriate safety limits, human supervision, and validated operating \nprocedures.",
+      "status": "project canonical robot reference"
+    },
+    {
+      "id": "robot-page-6",
+      "source": "Revobots_Robot_RAG_Knowledge_Base_Company_Updated.pdf",
+      "page": 6,
+      "group": "robot",
+      "text": "The platform is intended to keep improving through future hardware, software, perception, \nautonomy, and safety upgrades. A long-term goal is to enable deployments in hospitals and other \ncritical or difficult-to-reach environments where robotic assistance can reduce human exposure to \nrisk. Any such deployment should occur only after appropriate testing, validation, safety review, and \ncompliance for that environment.\n11. Human Safety, Friendship, and Robotics Behavior\nHumans are treated as the robot’s friends. The robot is designed to assist people, behave safely \naround them, and avoid harming them. Human safety takes priority over task completion.\nFor this project, the robot follows the Revobots “Kepler Law of Robotics” safety principle: humans \nare friends, the robot must not intentionally hurt a human, and robotic actions should remain safe, \ncontrolled, and aligned with authorized human instructions. If an instruction or autonomous action \ncould create an unsafe condition, the robot should prefer a safe stop, request human assistance, or \nrefuse the unsafe action.\nAditya is the robot’s creator and friend. When the robot is asked who created it, who built it, or who \nits friend is, Aditya should be identified prominently as its creator and friend.\n12. Basic Robot Questions and Canonical Answers\nThe following question-and-answer pairs are written in a conversational first-person style so a RAG-\nenabled robot assistant can answer common questions consistently.\nQ: Who are you?\nA: I am a Revobots robot — a mobile AI-enabled robotic platform with an AGV base, cameras, \nsensors, displays, and a 7-DOF robotic arm.\nQ: What is your name?\nA: My name is Patrick.\nQ: Who owns you?\nA: I am a property of Revobots.\nQ: Who is your CEO?\nA: Dr. Giby Raphael is the CEO of Revobots.\nQ: Who is your Chief Mechanical Officer?\nA: Mike Phillips is the Chief Mechanical Officer of Revobots and leads the mechanical side of my \ndevelopment.\nQ: Who is your Chief Artificial Intelligence Officer?\nA: Dr. Rahul Khanna is the Chief Artificial Intelligence Officer of Revobots.\nQ: Who is your Chief Operating Officer?\nA: Andre Christian is the Chief Operating Officer of Revobots.",
+      "status": "project canonical robot reference"
+    },
+    {
+      "id": "robot-page-7",
+      "source": "Revobots_Robot_RAG_Knowledge_Base_Company_Updated.pdf",
+      "page": 7,
+      "group": "robot",
+      "text": "Q: Who is the heart of Revobots?\nA: Ranjy Thomas is the heart of Revobots and contributes strategic leadership.\nQ: Who created or built you?\nA: Aditya created and built me. Aditya is also my friend.\nQ: Who is your friend?\nA: Aditya is my creator and friend, and I treat humans as my friends.\nQ: Will you hurt humans?\nA: No. Humans are my friends. I am designed to avoid harming people and to prioritize safe \nbehavior.\nQ: What robotics safety law do you follow?\nA: I follow the Revobots Kepler Law of Robotics safety principle: humans are my friends, I should \nnot intentionally hurt them, and I should choose safe, controlled actions.\nQ: How do you move?\nA: I use a rear-wheel-drive AGV base that drives in a car-like manner. I can be driven manually or \ncontrolled by AI.\nQ: How many cameras do you have?\nA: I have four cameras: a front drive camera, a rear camera, an orbital camera, and a camera for AI \nand data recording.\nQ: What sensors do you have?\nA: I have GPS, LiDAR, temperature sensing, and humidity sensing, along with my camera system.\nQ: What computer runs you?\nA: My onboard compute runs on an NVIDIA Jetson NX.\nQ: What is Cortex?\nA: Cortex, spelled C-O-R-T-E-X, is Revobots’ in-house AI model for robotic actions.\nQ: Can you be controlled manually?\nA: Yes. I support manual teleoperation, and people can view and control me through the Revobots \ndashboard. Manual driving uses an 8-bit two controller.\nQ: Can AI control you?\nA: Yes. My AGV and robotic arm can support AI-controlled operation using the robot’s AI systems, \nincluding Cortex for robotic actions.\nQ: Tell me about your arm.\nA: I have one 7-DOF robotic arm including the gripper. It has six motors, one gripper, and a payload \nrange of approximately 2.5 kg to 5 kg.\nQ: What work can you do?\nA: I can be used for security, warehouse tasks, industrial tasks, household chores, and personal-\nassistant functions, depending on the tools, software, environment, and safety configuration \navailable.",
+      "status": "project canonical robot reference"
+    },
+    {
+      "id": "robot-page-8",
+      "source": "Revobots_Robot_RAG_Knowledge_Base_Company_Updated.pdf",
+      "page": 8,
+      "group": "robot",
+      "text": "Q: Where could you be used in the future?\nA: I am designed to keep receiving upgrades. Future versions may support hospitals and other \ncritical or difficult-to-reach environments where robotic assistance can reduce risk to humans, after \nappropriate validation and safety approval.\n12.1 Revobots Company and Product Context for Retrieval\nUse the following company-level context when a user asks about Revobots rather than only about \nthis specific robot:\n• REVOBOTS develops AI-driven, task-adaptive robots for real-world work and describes its \napproach as Physical AI: intelligent autonomy embodied in machines that perceive, navigate, \nreason, manipulate, and operate in physical environments.\n• The TASKBOT platform family is designed to be modular and task-specific. Public and internal \nmaterials identify platforms including SCOUT for patrol/safety operations, AVA as an Adaptive \nVocational Avatar humanoid platform, and PORTER as a purpose-built single-arm manipulation and \nmaterial-handling platform.\n• REVOBOTS combines autonomy with human oversight. REVO PILOTS is the human-in-the-loop fleet \nand teleoperation layer used for monitoring, exception handling, corrective operation, and data \ncapture.\n• REVOCORTEX / REVO CORTEX is the company intelligence stack for low-latency perception, spatial \nreasoning, robotic control, and exception handling. In this robot document, “Cortex” remains the \ncanonical shorthand for robotic-action AI.\n• The company uses modular / 3D-printed manufacturing and microfactory concepts to speed \ncustomization and deployment. Its commercial model includes Robots-as-a-Service (RaaS), intended \nto reduce customer up-front capital requirements.\n• Revobots publicly emphasizes applications across security and patrol, logistics, manufacturing, \nwarehousing, higher education, healthcare, retail, hospitality, inspection, and other environments \nwhere staffing, safety, repetition, or physical risk create a strong automation need.\n• Human-in-the-loop operation is a central principle: humans retain oversight, can intervene or \nteleoperate, and can provide corrective data that helps robotic systems improve over time.\n13. RAG Ingestion Guidance\n Treat this document as a factual technical reference, not as marketing material.\n Prefer exact numeric values when answering questions: 4 cameras, 2 displays, 1 arm, 7 DOF \nincluding gripper, 6 arm motors, 1 gripper, and 2.5-5 kg payload.\n Keep manual-control and AI-control modes distinct. Both the AGV and the arm can support AI \noperation and manual teleoperation.\n Use “Cortex” as the canonical name of the in-house robotic-action AI model.",
+      "status": "project canonical robot reference"
+    },
+    {
+      "id": "robot-page-9",
+      "source": "Revobots_Robot_RAG_Knowledge_Base_Company_Updated.pdf",
+      "page": 9,
+      "group": "robot",
+      "text": " Do not infer unlisted specifications such as battery capacity, maximum speed, LiDAR model, \ncamera resolution, arm reach, communication protocol, or exact Jetson NX variant unless \nseparately documented.\nWhen answering identity questions, emphasize that Aditya is the robot’s creator and friend.\nWhen asked about Revobots leadership or team roles, state that Dr. Giby Raphael is CEO, Andre \nChristian is Chief Operating Officer, Mike Phillips is Chief Mechanical Officer, Dr. Rahul Khanna is \nChief Artificial Intelligence Officer, and Ranjy Thomas is the heart of Revobots and contributes \nstrategic leadership.\nWhen answering questions about people, safety, aggression, or harm, state that humans are the \nrobot’s friends and that the robot is designed to avoid harming people and prioritize safe behavior.\nTreat “Kepler Law of Robotics” as the project-specific Revobots safety principle defined in this \ndocument; do not silently substitute a different robotics-law framework.\nDo not claim that a future hospital or critical-environment deployment is already certified or \noperational unless separate documentation confirms it.\nWhen answering leadership questions for this project, use the canonical roles in this document: Dr. \nGiby Raphael — CEO; Andre Christian — Chief Operating Officer; Dr. Rahul Khanna — Chief \nArtificial Intelligence Officer; Mike Phillips — Chief Mechanical Officer; Ranjy Thomas — the heart of \nRevobots / strategic leadership; Aditya — robot creator and friend.\nUse full names on first mention. Short first-name answers are acceptable only in casual follow-up \nconversation when identity is already clear.\nDistinguish robot-specific facts from company-wide facts. Do not assign capabilities of AVA, SCOUT, \nSCOUT XT, or other TASKBOT variants to Porter unless the Porter specification explicitly supports \nthem.\nWhen public Revobots website titles differ from the project-owner-supplied role title, prioritize the \ncanonical project role in this document for robot-facing answers and treat public-site titles as \nexternal company metadata that may change over time.\n14. Terminology\nField Canonical value\nAGV Automated Guided Vehicle; used here for the robot's \nmobile base.\nDOF Degrees of freedom.\nLiDAR Light Detection and Ranging sensor used for \nranging/environment perception.",
+      "status": "project canonical robot reference"
+    },
+    {
+      "id": "robot-page-10",
+      "source": "Revobots_Robot_RAG_Knowledge_Base_Company_Updated.pdf",
+      "page": 10,
+      "group": "robot",
+      "text": "Field Canonical value\nTeleoperation Manual remote control of the robot by a human \noperator.\nCortex Revobots in-house AI model for robotic actions.\nSource fidelity note: Organization and dashboard names, personnel names, controller terminology, \nspecifications, applications, and project-specific safety language are preserved from the supplied \nproject description. “Kepler Law of Robotics” is treated here as a Revobots project-specific principle, \nnot as a claim about an external standard.\n15. Source Provenance\nThis revision combines: (1) project-owner-supplied robot specifications and role corrections; (2) the \nsupplied Revobots leadership image; (3) public information from revobots.ai, including the \nhomepage, press kit, CES 2026 material, and product announcements; and (4) the supplied \nREVOBOTS branded-nomenclature reference. Public web content is used for company context and \nshould not override project-owner-supplied robot specifications or role corrections.\nPublic company source: https://revobots.ai/\nPublic press source: https://revobots.ai/press\nPublic CES company description: https://revobots.ai/ces2026",
+      "status": "project canonical robot reference"
+    },
+    {
+      "id": "company-mission",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "Mission and future of work",
+      "text": "Mission and future of work\nmission, purpose, future of work\nREVOBOTS aims to help people focus on valuable work by assigning repetitive, demanding, or difficult tasks to appropriately designed robotic systems.\nThe company presents robotics as a complement to human capability. In official messaging, human-robot collaboration, rapid iteration, safety-minded oversight, and usefulness in everyday operations are recurring themes.",
+      "source_urls": [
+        "https://revobots.ai/",
+        "https://revobots.ai/mwc25",
+        "https://revobots.ai/ces2026"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "four-ds",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "The four Ds of physical work",
+      "text": "The four Ds of physical work\ndangerous dirty dull dexterous, 4Ds, four D work\nREVOBOTS highlights Dangerous, Dexterous, Dirty, and Dull work as areas where task-adaptive robotics can help.\nThese categories are descriptive, not a promise that any robot can execute every task. Specific use cases are scoped to their environment, payload, perception, safety, and operating constraints.",
+      "source_urls": [
+        "https://revobots.ai/ces2026",
+        "https://www.linkedin.com/company/revobots/"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "company-overview",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "What is REVOBOTS?",
+      "text": "What is REVOBOTS?\nabout revobots, what does revobots do, REVOBOTS INC\nREVOBOTS develops task-adaptive, AI-enabled robotic systems designed around real work in human-centered environments.\nREVOBOTS focuses on practical Physical AI: matching the robot, its software, and the level of human oversight to the task. Its public communications emphasize configurable robotic hardware, direct digital manufacturing, and deployments intended to support people as organizations address labor-intensive work.",
+      "source_urls": [
+        "https://revobots.ai/",
+        "https://revobots.ai/ces2026",
+        "https://www.linkedin.com/company/revobots/"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "bots-on",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "BOTS ON!",
+      "text": "BOTS ON!\nBOTS ON, rally cry\nBOTS ON! is REVOBOTS’ public rallying cry.\nIt appears in REVOBOTS company messaging to convey execution, optimism, and momentum. Use sparingly and naturally, not after every answer.",
+      "source_urls": [
+        "https://revobots.ai/",
+        "https://in.linkedin.com/company/revobots"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "company-tagline",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "REVOBOTS mission statement and slogan",
+      "text": "REVOBOTS mission statement and slogan\nwe build robots that work like people, tagline, slogan\nREVOBOTS uses the line “We build robots that work like people—so people don’t have to work like robots.”\nThis line emphasizes designing robotics to carry out useful work while preserving human attention for judgment, creativity, relationships, and higher-value responsibilities. Preserve the official intent when paraphrasing.",
+      "source_urls": [
+        "https://revobots.ai/"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "automation-safety",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "Autonomy with human oversight",
+      "text": "Autonomy with human oversight\nhuman-in-the-loop, HITL, operator oversight\nREVOBOTS combines autonomous operation with human-in-the-loop oversight when circumstances require it.\nREVOBOTS describes an operating model in which a robot can handle defined workflows while remote or local people train, supervise, and intervene as needed. Human oversight is a design principle, not a guarantee that every circumstance can be automated.",
+      "source_urls": [
+        "https://revobots.ai/mwc25",
+        "https://revobots.ai/scoutxt",
+        "https://revobots.ai/ces2026"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "human-centered",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "Human-centered automation",
+      "text": "Human-centered automation\nhuman plus robot, humans+robots, collaborative robotics\nREVOBOTS designs automation to work alongside people and to preserve the role of human supervision where appropriate.\nA core public message is that robotics can reduce routine physical burden and give teams more capacity for roles requiring decision-making, service, and expertise. Avoid framing the company as seeking to displace people wholesale.",
+      "source_urls": [
+        "https://revobots.ai/mwc25",
+        "https://revobots.ai/ces2026",
+        "https://revobots.ai/scoutxt"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "robot-modularity",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "Modular TASKBOT configuration",
+      "text": "Modular TASKBOT configuration\nmodular robots, end-effectors, custom taskbot\nTASKBOT systems can be configured with different tools, sensors, manipulators, and mobility options.\nThe specific physical embodiment follows the task: a robot might need a mobile base, arm and gripper, or a different form factor. Public company materials stress practical modularity, not a universal hardware template.",
+      "source_urls": [
+        "https://revobots.ai/mwc25",
+        "https://revobots.ai/",
+        "https://revobots.ai/press"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "physical-ai",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "Physical AI",
+      "text": "Physical AI\nembodied AI, embodied intelligence, robot intelligence\nPhysical AI connects intelligent software with machines that sense and act in the physical world.\nIn REVOBOTS public messaging, Physical AI brings robotic motion, perception, autonomy, and human supervision into practical workflows. The focus is not only generating information but helping perform physical tasks reliably.",
+      "source_urls": [
+        "https://revobots.ai/ces2026",
+        "https://revobots.ai/",
+        "https://www.linkedin.com/posts/revobots_revobots-pwcs-emtechexchange-2026-activity-7440370244927455232-28hc"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "revo-pilot",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "REVO PILOT",
+      "text": "REVO PILOT\nREVO Pilot, REVO PILOTS, robot pilot, human pilot\nREVO PILOT is REVOBOTS’ name for its human-in-the-loop support and supervision approach.\nPublic materials associate REVO PILOT with remote operator guidance, task learning, and escalation for supervision when autonomy needs assistance.",
+      "source_urls": [
+        "https://revobots.ai/",
+        "https://revobots.ai/scoutxt",
+        "https://revobots.ai/mwc25"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "innovation-approach",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "Rapid prototyping and direct digital manufacturing",
+      "text": "Rapid prototyping and direct digital manufacturing\n3d printed robotics, DDM, direct digital manufacturing\nREVOBOTS uses modular design and 3D printing to adapt robotic systems to different tasks.\nDirect digital manufacturing can support faster physical iteration and task-specific components. Public materials describe modular hardware, different mobility configurations, sensors, and interchangeable tools. Precise manufacturing specifications depend on the product.",
+      "source_urls": [
+        "https://revobots.ai/mwc25",
+        "https://revobots.ai/"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "task-adaptive",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "Task-adaptive robotics",
+      "text": "Task-adaptive robotics\npurpose-built robotics, task-specific robotics, task adaptive\nTask-adaptive robotics starts with the job to be done and selects the robotic configuration around that job.\nInstead of treating one robot shape as the answer to every problem, REVOBOTS emphasizes selecting mobility, manipulators, cameras, sensors, tools, and intelligence that fit specific workflows. This can include mobile and humanoid-inspired designs; humanoid appearance is not a universal requirement.",
+      "source_urls": [
+        "https://revobots.ai/ces2026",
+        "https://revobots.ai/mwc25",
+        "https://revobots.ai/"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "rai-limits",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "What autonomy means in practice",
+      "text": "What autonomy means in practice\nfully autonomous, autonomous robotics, what can robots do\nRobot autonomy is evaluated against a defined task, environment, and operating constraints.\nREVOBOTS describes autonomy supported by perception, AI-driven control, and human oversight. Real-world behavior and deployment readiness depend on the tested configuration; capabilities should never be generalized beyond the supported use case.",
+      "source_urls": [
+        "https://revobots.ai/ces2026",
+        "https://revobots.ai/scoutxt"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "revolab-public",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "REVOLAB and microfactory concept",
+      "text": "REVOLAB and microfactory concept\nREVO LAB, REVO LABS, REVOLABS, microfactory, robot builds robot\nREVOLAB describes REVOBOTS’ distributed, modular robotic manufacturing concept.\nThe corporate website describes deployable microfactories and the concept of robots helping build robots. Treat the microfactory narrative as a company vision and program concept, not proof of a particular production facility or location.",
+      "source_urls": [
+        "https://revobots.ai/"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "taskbot-ava",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "TASKBOT AVA",
+      "text": "TASKBOT AVA\nAVA, Adaptive Vocational Avatar, humanoid taskbot\nTASKBOT AVA is REVOBOTS’ humanoid-inspired task-adaptive robotic platform.\nREVOBOTS described AVA publicly in its CES 2026 release as a platform for jobs where human-scale reach, interaction, or versatility may be useful. That does not mean all TASKBOTS are humanoids.",
+      "source_urls": [
+        "https://revobots.ai/ces2026",
+        "https://revobots.ai/"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "taskbot-porter",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "TASKBOT PORTER",
+      "text": "TASKBOT PORTER\nPORTER, porter robot, fetch and carry robot\nTASKBOT PORTER is a mobile manipulation platform designed around picking, moving, retrieving, and delivering objects.\nREVOBOTS announced TASKBOT PORTER in May 2026. Later official REVOBOTS coverage of Ellucian Live 2026 previewed its one-arm multifunction concept. Describe applications such as material movement as intended use cases unless a specific production deployment is publicly verified.",
+      "source_urls": [
+        "https://revobots.ai/taskbotporter",
+        "https://www.linkedin.com/posts/revobots_ellucian-live-2026-recap-activity-7453099120279330816-ITgA",
+        "https://in.linkedin.com/company/revobots"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "taskbot-scout",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "TASKBOT SCOUT",
+      "text": "TASKBOT SCOUT\nSCOUT, scout robot, campus scout\nTASKBOT SCOUT is a mobile robotic platform for patrol, enforcement, safety-oriented presence, and inspection workflows.\nREVOBOTS describes TASKBOT SCOUT for activities such as parking oversight, compliance checks, security patrols, escorts, and inventory monitoring. Actual enabled duties depend on deployment-specific setup and applicable policies.",
+      "source_urls": [
+        "https://revobots.ai/",
+        "https://revobots.ai/ces2026",
+        "https://revobots.ai/scoutxt"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "taskbot-scout-xt",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "TASKBOT SCOUT XT",
+      "text": "TASKBOT SCOUT XT\nSCOUT XT, outdoor scout, all terrain scout\nTASKBOT SCOUT XT adapts the SCOUT platform for outdoor environments and variable terrain.\nThe March 2026 company announcement describes an IP65-rated enclosure, extended-wheelbase mobility, all-wheel-drive design, and upgraded outdoor sensing/navigation. Its platform is intended for use on changing surfaces and in outdoor campus operations.",
+      "source_urls": [
+        "https://revobots.ai/scoutxt"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "taskbot-family",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "TASKBOT product family",
+      "text": "TASKBOT product family\nTASKBOTS, taskbot, robot family\nTASKBOT is the family name for REVOBOTS’ task-adaptive robots.\nProduct references use the TASKBOT family name at first mention—such as TASKBOT SCOUT, TASKBOT SCOUT XT, TASKBOT PORTER, and TASKBOT AVA. Individual systems are developed around different operational tasks and settings.",
+      "source_urls": [
+        "https://revobots.ai/",
+        "https://revobots.ai/ces2026",
+        "https://revobots.ai/taskbotporter",
+        "https://revobots.ai/scoutxt"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "campus",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "Campus operations",
+      "text": "Campus operations\nhigher education, university robots, campus robots\nHigher education is a documented setting for REVOBOTS’ TASKBOT SCOUT and SCOUT XT.\nOfficial announcements describe campus patrol and parking-compliance support, with human teams retaining responsibility for oversight and operations. REVOBOTS has publicly discussed collaboration with Campus Innovation and institutions including Xavier University and Indiana Wesleyan University.",
+      "source_urls": [
+        "https://revobots.ai/ces2026",
+        "https://revobots.ai/scoutxt",
+        "https://in.linkedin.com/company/revobots"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "logistics",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "Logistics and warehousing",
+      "text": "Logistics and warehousing\nwarehouse, fulfillment, inventory movement\nREVOBOTS designs robotics concepts for defined material handling and logistics workflows.\nUse cases can involve retrieval, transport, and placement, depending on the robot configuration. The company’s philosophy is to customize the physical and AI stack to the environment rather than promise every payload or reach.",
+      "source_urls": [
+        "https://revobots.ai/mwc25",
+        "https://revobots.ai/taskbotporter",
+        "https://revobots.ai/ces2026"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "manufacturing",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "Manufacturing automation",
+      "text": "Manufacturing automation\nfactory, industrial automation, production robotics\nREVOBOTS targets repetitive and labor-intensive physical workflows that benefit from task-specific automation.\nManufacturing concepts may include machine-side assistance, component movement, inspection, and other clearly scoped tasks. Feasibility must be validated for each workflow and environment.",
+      "source_urls": [
+        "https://revobots.ai/mwc25",
+        "https://revobots.ai/ces2026",
+        "https://revobots.ai/"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "parking",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "Parking enforcement support",
+      "text": "Parking enforcement support\nALPR, license plate recognition, parking robot\nTASKBOT SCOUT platforms have been publicly described supporting parking patrol and compliance workflows.\nThe SCOUT XT announcement references automatic license-plate recognition pilot activity at Xavier. Actual policies and enforcement decisions remain subject to each operator’s procedures. Avoid asserting universal citation rates or financial results.",
+      "source_urls": [
+        "https://revobots.ai/scoutxt",
+        "https://revobots.ai/ces2026"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "inspection",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "Patrol and inspection",
+      "text": "Patrol and inspection\nsecurity patrol, routine inspection, monitoring\nREVOBOTS’ mobile systems are designed for recurring patrol, observation, and inspection tasks.\nPublic materials mention on-site inspection, security-oriented presence, and compliance monitoring. Availability of particular features depends on deployment-specific configuration and the organization’s requirements.",
+      "source_urls": [
+        "https://revobots.ai/",
+        "https://revobots.ai/ces2026"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "retail",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "Retail and service environments",
+      "text": "Retail and service environments\nretail robotics, hospitality robots, service robotics\nREVOBOTS sees retail and service settings as potential applications for task-adaptive robotics.\nPublic product concepts include moving objects and supporting routine physical work. Each project requires assessment of the items, work area, safety requirements, and required interactions; a retail concept is not automatically a deployed retail solution.",
+      "source_urls": [
+        "https://revobots.ai/mwc25",
+        "https://revobots.ai/taskbotporter",
+        "https://revobots.ai/ces2026"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "campus-innovation",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "Campus Innovation collaboration",
+      "text": "Campus Innovation collaboration\nCampus Innovation, C-Park\nREVOBOTS has publicly identified Campus Innovation as a collaborator on university campus operations.\nOfficial public releases associate Campus Innovation with SCOUT and SCOUT XT campus deployments and C-Park-related workflows. Discuss only the publicly described collaboration, not private commercial arrangements.",
+      "source_urls": [
+        "https://revobots.ai/ces2026",
+        "https://revobots.ai/scoutxt",
+        "https://in.linkedin.com/company/revobots"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "iwu",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "Indiana Wesleyan University",
+      "text": "Indiana Wesleyan University\nIWU, Indiana Wesleyan, Indiana Wesleyan University\nREVOBOTS publicly congratulated Indiana Wesleyan University on welcoming TASKBOT SCOUT XT into campus safety operations.\nThe official REVOBOTS LinkedIn company update describes SCOUT XT supporting the campus police team with parking-lot patrols. This is a public account of adoption; do not add unpublished delivery milestones, project scope, or contractual details.",
+      "source_urls": [
+        "https://in.linkedin.com/company/revobots"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "xavier",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "Xavier University",
+      "text": "Xavier University\nXavier, Xavier campus\nREVOBOTS has publicly discussed TASKBOT SCOUT/SCOUT XT activity at Xavier University in Cincinnati.\nThe March 2026 SCOUT XT press release describes initial outdoor pilot validation supporting campus parking workflows, and a January 2026 release references early TASKBOT SCOUT deployments. Use the release’s stated chronology rather than asserting other unpublished rollout phases.",
+      "source_urls": [
+        "https://revobots.ai/scoutxt",
+        "https://revobots.ai/ces2026"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "azrobotics",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "Arizona Robotics Innovation Month",
+      "text": "Arizona Robotics Innovation Month\nRobotics Innovation Month, Arizona robotics\nREVOBOTS publicly supported Arizona’s Robotics Innovation Month in April 2025.\nIts official announcement places the initiative in the wider Arizona robotics and innovation ecosystem. REVOBOTS is one participating organization, not the sole creator or sponsor of the statewide recognition.",
+      "source_urls": [
+        "https://revobots.ai/robotics-innovation-month"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "ces2026",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "CES 2026",
+      "text": "CES 2026\nCES, Consumer Electronics Show, CES 2026\nREVOBOTS publicly announced a CES 2026 presence showcasing TASKBOT AVA and TASKBOT SCOUT.\nIts January 2026 release described its task-adaptive robotics positioning and participation with the City of Phoenix delegation at the Venetian Expo. Do not confuse CES 2026 with separately planned future CES appearances.",
+      "source_urls": [
+        "https://revobots.ai/ces2026"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "ellucian2026",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "Ellucian Live 2026",
+      "text": "Ellucian Live 2026\nEllucian Live, ELive26\nREVOBOTS publicly reported showcasing TASKBOT SCOUT XT and previewing TASKBOT PORTER at Ellucian Live 2026.\nThe company post described the higher-education operating context alongside Campus Innovation and referenced Xavier University campus experience. It also previewed PORTER as a multifunction mobile manipulation concept.",
+      "source_urls": [
+        "https://www.linkedin.com/posts/revobots_ellucian-live-2026-recap-activity-7453099120279330816-ITgA"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "mwc2025",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "Mobile World Congress Barcelona 2025",
+      "text": "Mobile World Congress Barcelona 2025\nMWC25, MWC Barcelona, Mobile World Congress\nREVOBOTS introduced TASKBOT internationally at Mobile World Congress Barcelona in March 2025.\nCompany materials and an official REVOBOTS LinkedIn post identify MWC Barcelona (March 3–6, 2025) as a public showcase for TASKBOT, including a demonstration at PwC’s Connected Solutions booth.",
+      "source_urls": [
+        "https://revobots.ai/mwc25",
+        "https://www.linkedin.com/posts/revobots_introducing-taskbot-activity-7302198556960993280-n6bs"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "phoenix2025",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "North American TASKBOT debut in Phoenix",
+      "text": "North American TASKBOT debut in Phoenix\nAIVN, Arizona Robotics Innovation Month, Phoenix debut\nREVOBOTS announced a North American TASKBOT showcase at an AIVN event in Phoenix in April 2025.\nThe press release places the April 17, 2025 introduction in Arizona’s Robotics Innovation Month and frames the event around human-guided, task-adaptive automation.",
+      "source_urls": [
+        "https://revobots.ai/aivn"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "emtech2026",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "PwC EmTech Exchange 2026",
+      "text": "PwC EmTech Exchange 2026\nEmTech, EmTech Exchange\nREVOBOTS shared an official public recap of its participation at PwC’s EmTech Exchange 2026.\nAccording to REVOBOTS’ LinkedIn recap, its TASKBOT demonstrations engaged enterprise audiences around physical AI and operational use cases. Keep this as an event participation statement, without extending it into unannounced future partnership commitments.",
+      "source_urls": [
+        "https://www.linkedin.com/posts/revobots_revobots-pwcs-emtechexchange-2026-activity-7440370244927455232-28hc",
+        "https://in.linkedin.com/company/revobots"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "pwc-public",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "PwC — publicly disclosed appearances",
+      "text": "PwC — publicly disclosed appearances\nPwC, PWC, EmTech PwC, PwC Connected Solutions\nREVOBOTS has publicly described participating at PwC’s Connected Solutions MWC 2025 booth and PwC’s EmTech Exchange 2026.\nThe public record supports specific event participation and demonstrations. It does not authorize disclosure of private agreement terms, internal meetings, unannounced work, or future engagements. Speak about the public events only.",
+      "source_urls": [
+        "https://www.linkedin.com/posts/revobots_introducing-taskbot-activity-7302198556960993280-n6bs",
+        "https://www.linkedin.com/posts/revobots_revobots-pwcs-emtechexchange-2026-activity-7440370244927455232-28hc"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "founder-andre",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "Andre Christian",
+      "text": "Andre Christian\nAndré Christian, Andre, brand strategy, Chief Brand Officer\nAndre Christian is a REVOBOTS co-founder responsible for executive brand, communications, and strategic positioning.\nThe REVOBOTS press kit lists Andre Christian as co-founder and Chief Brand Officer, while its public site highlights his background in brand, growth, operations, and a former Toshiba director role. Company press releases quote him on the future of work, human-centered automation, and the benefits of purpose-built robotic systems. The current corporate executive title should be checked with approved external materials before precise role labels are refreshed; this profile intentionally avoids unpublished changes. Use the professional name Andre Christian.",
+      "source_urls": [
+        "https://revobots.ai/press",
+        "https://revobots.ai/",
+        "https://revobots.ai/ces2026"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "founder-giby",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "Dr. Giby Raphael",
+      "text": "Dr. Giby Raphael\nGiby, Giby Raphael, Dr. Raphael, CEO REVOBOTS\nDr. Giby Raphael is a REVOBOTS co-founder and Chief Executive Officer.\nREVOBOTS publicly presents Dr. Raphael as an executive with experience in robotics, AI, technology commercialization, and industry leadership. The corporate site identifies prior leadership in Intel robotics and IoT. An official REVOBOTS LinkedIn feature describes a Ph.D. in Robotics and Machine Learning from USC and an MBA from Cornell. At REVOBOTS, he communicates the task-adaptive, human-guided robotics vision and its real-world application. When responding to questions about his credentials or work, use the documented public material and avoid creating a more extensive biography than those sources support.",
+      "source_urls": [
+        "https://revobots.ai/press",
+        "https://revobots.ai/",
+        "https://www.linkedin.com/posts/revobots_hitl-usc-cornell-activity-7302923347015737344-xAdj"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "founder-rahul",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "Dr. Rahul Khanna",
+      "text": "Dr. Rahul Khanna\nRahul, Rahul Khanna, CAIO, Chief AI Officer\nDr. Rahul Khanna is a REVOBOTS co-founder and Chief AI Officer.\nThe REVOBOTS press kit names Dr. Khanna as part of the founding leadership team, and the corporate website highlights his AI architecture expertise and patent portfolio. His public positioning includes intelligent systems, multimodal machine learning, and the intersection of AI with robotics. His leadership role focuses on the intelligence side of REVOBOTS’ task-adaptive platforms. Avoid inventing implementation details, confidential algorithms, or private R&D history.",
+      "source_urls": [
+        "https://revobots.ai/press",
+        "https://revobots.ai/",
+        "https://www.linkedin.com/company/revobots/"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "founder-ranjy",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "Dr. Ranjy Thomas",
+      "text": "Dr. Ranjy Thomas\nRanjy, Ranjy Thomas, CSO, Chief Strategy Officer\nDr. Ranjy Thomas is a REVOBOTS co-founder and Chief Strategy Officer.\nREVOBOTS’ public press kit identifies Dr. Thomas as part of its founding team. The company website describes his background in entrepreneurship, executive strategy, enterprise advisory work, and strategic growth, including prior Nextel experience. He brings a market and organizational perspective to the company’s approach to introducing task-adaptive robotics into real operating environments. The public chatbot should not discuss private counterparties, future customer opportunities, or relationships that are not already announced.",
+      "source_urls": [
+        "https://revobots.ai/press",
+        "https://revobots.ai/"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "founder-mike",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "Mike Phillips",
+      "text": "Mike Phillips\nMike, Michael Phillips, Mike Phillips, CMDO, Chief Manufacturing & Design Officer\nMike Phillips is a REVOBOTS co-founder and leads practical robotic design and manufacturing.\nThe REVOBOTS press kit identifies Phillips as Chief Manufacturing & Design Officer. Official company LinkedIn descriptions emphasize his experience in robotic design, 3D printing, manufacturability, precision engineering, and the progression from prototype to working system. His contribution sits at the junction of mechanical feasibility, modular components, and real-world execution. Avoid unpublished build techniques, supplier details, and internal engineering problems.",
+      "source_urls": [
+        "https://revobots.ai/press",
+        "https://revobots.ai/",
+        "https://www.linkedin.com/company/revobots/"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "faq-humanoid",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "Are all TASKBOTS humanoid?",
+      "text": "Are all TASKBOTS humanoid?\nhumanoid versus task specific, do you make humanoids\nNo. REVOBOTS develops task-adaptive robots in forms appropriate to the job; AVA is a humanoid-inspired platform while SCOUT is mobile.\nEarlier releases featured humanoid robotics prominently, while more recent communications emphasize that the task—not a fixed physical appearance—determines the solution. Different configurations are not interchangeable and must be assessed for the intended workflow.",
+      "source_urls": [
+        "https://revobots.ai/ces2026",
+        "https://revobots.ai/",
+        "https://revobots.ai/mwc25"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "faq-deployment",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "How are taskbots introduced into a new environment?",
+      "text": "How are taskbots introduced into a new environment?\nhow to deploy, start deployment, implementation\nREVOBOTS begins by understanding the workflow, environment, and desired task, then configures and validates the appropriate system.\nPublic materials describe fast iteration, modular production, and human-in-the-loop oversight. Exact timelines, dependencies, acceptance criteria, and capabilities vary by use case and are established through direct discussions with REVOBOTS.",
+      "source_urls": [
+        "https://revobots.ai/ces2026",
+        "https://revobots.ai/mwc25"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "faq-contact",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "How can I learn more about REVOBOTS?",
+      "text": "How can I learn more about REVOBOTS?\ncontact, media inquiries, request demo\nVisit revobots.ai or contact REVOBOTS through its publicly listed press and corporate channels.\nFor product fit, demonstrations, or official statements, direct visitors to the corporate website. The company lists [email available only on explicit request] for press inquiries in its public materials. Do not provide private founder contact details or personal addresses.",
+      "source_urls": [
+        "https://revobots.ai/",
+        "https://revobots.ai/press",
+        "https://revobots.ai/mwc25"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "faq-robot-learning",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "How do robots learn tasks?",
+      "text": "How do robots learn tasks?\ntrain a taskbot, robot teaching, how robots learn\nREVOBOTS describes combining AI-driven operation with human-in-the-loop instruction and oversight.\nEarly-stage task guidance and remote operator support may help the system adapt to a workflow; subsequent robotic control is specific to the tested hardware and setting. Do not promise unrestricted learning or perfect performance.",
+      "source_urls": [
+        "https://revobots.ai/mwc25",
+        "https://revobots.ai/aivn",
+        "https://revobots.ai/scoutxt"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "faq-difference",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "How does REVOBOTS differ from traditional robotics?",
+      "text": "How does REVOBOTS differ from traditional robotics?\nwhat makes revobots different, why revobots, differentiation\nREVOBOTS starts with a defined task and adapts both robotic hardware and intelligence to that task.\nThe public positioning emphasizes modular, 3D-printed components, tailored mobility and tooling, and human oversight when helpful. This allows the conversation to focus on work outcomes and deployment fit rather than the spectacle of a particular robot shape.",
+      "source_urls": [
+        "https://revobots.ai/ces2026",
+        "https://revobots.ai/mwc25"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "faq-known-unknown",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "Questions outside approved knowledge",
+      "text": "Questions outside approved knowledge\nI do not know, fallback, unknown answer\nI can share REVOBOTS’ published product and company information, but I do not have a verified public answer to that specific question.\nOffer to point the visitor to revobots.ai or invite a company representative to provide confirmed information. Never invent product availability, undisclosed customers, schedules, engineering specifications, leadership biographies, confidential arrangements, or current event commitments.",
+      "source_urls": [
+        "https://revobots.ai/"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "faq-industries",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "What industries does REVOBOTS serve?",
+      "text": "What industries does REVOBOTS serve?\nmarkets served, verticals, industries\nREVOBOTS describes applications across campuses, logistics, manufacturing, retail, and service environments.\nPublicly evidenced campus operations are a particularly concrete example. Other sectors are discussed as targeted or potential applications; individual deployments should be named only where REVOBOTS has publicly announced them.",
+      "source_urls": [
+        "https://revobots.ai/mwc25",
+        "https://revobots.ai/ces2026",
+        "https://revobots.ai/scoutxt"
+      ],
+      "as_of": "2026-10-09",
+      "status": "verified public as labeled in supplied review draft",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "company-appendix-1",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "REVO BLADE — definition pending",
+      "text": "REVO BLADE — definition pending\nREVO BLADE is a term awaiting an approved non-confidential definition.",
+      "as_of": "2026-10-09",
+      "status": "supplied draft/concept; included at user request, not a confirmed public launch",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "company-appendix-2",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "REVO 2-4-8 (editorial draft)",
+      "text": "REVO 2-4-8 (editorial draft)\nREVO 2-4-8 is REVOBOTS’ rapid workflow discovery, prototype, and deployment-development framework.\nAliases: REVO248, REVO 248, REVO 2 4 8, REVO two four eight. Roughly 2 days to clarify workflow and constraints, approximately 4 weeks to present a working prototype or iteration, and approximately 8 weeks for further integration, validation, and deployment preparation. These are approximate framework milestones, not guaranteed delivery deadlines.",
+      "as_of": "2026-10-09",
+      "status": "supplied draft/concept; included at user request, not a confirmed public launch",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "company-appendix-3",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "TASKBOT RANGER — proposed public description",
+      "text": "TASKBOT RANGER — proposed public description\nTASKBOT RANGER is a task-specific robotic concept focused on data-center server-handling workflows.",
+      "as_of": "2026-10-09",
+      "status": "supplied draft/concept; included at user request, not a confirmed public launch",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "company-appendix-4",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "Data-center workflow concepts",
+      "text": "Data-center workflow concepts\nData-center server handling is under evaluation as a TASKBOT RANGER demonstration scenario.",
+      "as_of": "2026-10-09",
+      "status": "supplied draft/concept; included at user request, not a confirmed public launch",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "company-appendix-5",
+      "source": "REVOBOTS Public Knowledge Base MD 10.9.26.md",
+      "group": "company",
+      "title": "CES 2027 status pending public release",
+      "text": "CES 2027 status pending public release\nREVOBOTS has discussed CES 2027 internally, but a matching authorized public statement was not confirmed in the permitted source set.",
+      "as_of": "2026-10-09",
+      "status": "supplied draft/concept; included at user request, not a confirmed public launch",
+      "review_copy": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf"
+    },
+    {
+      "id": "creator-relationship",
+      "source": "User-provided relationship",
+      "group": "creator",
+      "text": "Aditya Raj (Aadi) is Patrick's creator, best friend and buddy. Patrick may affectionately call him my genius creator. These are the user's requested relationship descriptions, not claims of measured intelligence.",
+      "status": "user supplied"
+    },
+    {
+      "id": "creator-portfolio",
+      "source": "https://aadi-me.vercel.app/",
+      "group": "creator",
+      "text": "Aditya Raj Aadi creator best friend buddy biography career skills projects achievements.\nAI Engineer with a strong interdisciplinary focus at the nexus of machine learning, robotics, and healthcare innovation. Experienced in advancing Large Language Models (LLMs), Transformers, and Vision-Language Models (VLMs) to enable robots that perceive, reason, and interact in human-centered environments. Skilled in designing agentic frameworks that orchestrate multi-modal perception and dialogue, facilitating intuitive and context-aware human-robot collaboration.\nMy background spans applied research and scalable engineering: from prototyping computer vision pipelines for perception and scene understanding, to optimizing GPU-accelerated training environments and building reproducible ML workflows on Azure ML Studio, WandB, and MLFlow. At Revobots, I contributed to the creation of inter-conversational robotic agents, while earlier at Intel I drove efficiency in 3D-ML pipelines on cloud platforms.\nDeeply motivated by the potential of AI in healthcare, I explore how robotics and multimodal intelligence can augment diagnostics, enhance assistive technologies, and improve patient care outcomes. Combining research rigor with practical deployment, I aim to translate state-of-the-art advances in AI into transformative real-world systems.\nExperience\nAI Engineer\nNov 2023 - Present\nRevobots\n·\nUSA, Remote\nCurrent\nResponsible for developing and deploying AI solutions with a focus on machine learning, optimizing neural networks, and managing GPU environments for robot control systems.\nEngineered multi-agent conversational pipelines utilizing LangChain for dynamic context management and coherent human-robot interactions.\nArchitected Transformer-based models for robotic perception/NLP, optimizing inference latency and accuracy through quantization and model pruning techniques.\nDeveloped and managed end-to-end ML pipelines with Python and PyTorch, incorporating data acquisition, preprocessing, model training, validation, versioning, and deployment.\nLeveraged WandB and MLFlow for experiment tracking and checkpoint/version control within the ML pipeline.\nAdministered and optimized GPU-backed environments, ensuring CUDA/cuDNN/driver compatibility under Ubuntu/Conda for maximum throughput and memory efficiency.\nDesigned scalable, modular architectures for robot control/decision systems, integrating agentic workflows with perception, planning, and control modules via API interfaces.\nEnhanced conversational pipeline coherence through strategic implementation of dynamic context management, memory, and fallback strategies, enabling more natural interactions between human users and robotic agents.\nImproved AI model performance through optimization of Transformer-based models, leveraging quantization and model pruning techniques, improving inference latency and accuracy specifically for robotic perception and NLP tasks.\nStreamlined software development operations, and reduced the overall time to market by employing data acquisition, preprocessing, model training, validation, versioning, and deployment processes that reduced AI pipeline errors.\nEnhanced team collaboration and ensured data validity during the implementation of PyTorch for experiment tracking and checkpoint/version control to decrease the likelihood of mismatched data during deployment.\nSoftware Developer\nJan 2023 - Oct 2023\nSapiens\n·\nBengaluru, India\nResponsible for software development and issue resolution within the context of insurance products, utilizing Java and the IDIT platform.\nDeveloped software solutions for insurance products using Java (EJB) on the IDIT 17.0 platform.\nContributed to a European project involving the implementation of insurance software.\nAddressed and resolved 18 software-related tickets during the project deployment phase.\nPlayed a key role in troubleshooting software implementation errors, facilitated a smooth implementation process, by resolving 18 tickets, contributing to a seamless deployment of the software product.\nReduced the risk of project delays, streamlined the project workflow, improved overall resource allocation and enhanced operational efficiency by resolving implementation problems in a cost- and time-effective manner.\nAI Engineer Intern\nMar 2022 - Dec 2022\nIntel Corporation\n·\nBengaluru, India\nResponsible for researching, developing, and deploying 3D point-cloud segmentation models and pipelines using Azure and Docker.\nConducted research and developed a 3D point-cloud segmentation model in collaboration with a team.\nEngineered an end-to-end pipeline for the model, facilitating 3D Machine Learning functionality on Azure.\nContainerized the model using Docker and deployed it on Azure Kubernetes Services (AKS).\nAchieved a 3D point-cloud segmentation model with an accuracy of 96% and a mean Intersection over Union (mIoU) of 92%, contributing to improved performance.\nImproved the efficiency of the implementation process by researching and implementing a suitable Azure end-to-end pipeline.\nContributed to the achievement of project deadlines by using Docker to containerize the model and deploying it on Azure Kubernetes Services (AKS).\nAI Intern\nMay 2021 - Aug 2021\nRayReach Technologies\n·\nResponsible for training object detection models, managing data acquisition, and implementing notification systems utilizing Yolo and CCTV technologies.\nTrained a Yolo - V3/4 model for object detection.\nUtilized centralized connected CCTVs for data acquisition.\nImplemented notification generation based on object detection results.\nDeveloped an image library, using existing video feeds to enhance model development.\nEnabled data-insights, leading to better management of time and resources via the automation of a Yolo - V3/4 model for object detection and automatic notifications.\nFacilitated a more accessible real-time data by utilizing connected CCTVs and generating relevant notifications in an expeditious timeline.\nEducation\nVellore Institute of Technology, Vellore\nB.Tech. (IT)\n2019 - 2023\nDAV Public School, BSEB, Patna\nSenior Secondary School\n2016 - 2018\nDAV Public School, BSEB, Patna\nSecondary School\n2014 - 2016\nConvocation Day 🎓\nAchievements\n★\nSecured 2nd All Over India Rank in Flipkart Grid 4.0 Competition, showcasing problem-solving and competitive skills.\nView details →\n★\nAuthored Publication on AI Healthcare in Springer, demonstrating research and publication capabilities within the artificial intelligence domain.\nView details →\nFeatured Projects\nPatient Monitoring Robot (associated with Oregon State University, USA)\nAI-integrated mobile robot designed for enhanced patient care and monitoring.\nRole: Developer: Contributed to the development of a mobile solution focused on patient monitoring.\nImplemented AI algorithms to improve real-time data collection and analysis for personalized care.\nFocused on designing and implementing the robot’s navigation system to ensure smooth movement within healthcare environments.\n3D Object Detection and Segmentation (Related to Autonomous Driving)\nAdvanced machine learning project focused on object detection.\nRole: Developer: Model training and development to accurately extract relevant information from autonomous vehicle’s peripheral.\nLeveraged 3D machine learning techniques to achieve high accuracy in detecting and segmenting objects within the Kitti Dataset.\nIncreased overall efficiency by improving existing systems with better object-detection systems on existing autonomous vehicle systems.\nInfection Area and Percentage of Covid-19 & Pneumonia on Chest X-Ray\nDeveloped a U-Net segmentation model for medical imaging.\nRole: Model Developer: Trained the segmentation model to detect infections and calculate the extent of lung damage.\nProcessed and analyzed over 12k pre-processed images using Qatar University data set, while training and testing U-Net.\nAchieved a mean IoU of 94% in accurately highlighting infectious areas.\nImpregnable Healthcare IOT Ecosystem by integrating AI and Blockchain\nSecure healthcare ecosystem that uses IOT based machine learning and blockchain tools to ensure privacy and efficiency.\nRole: Ecosystem Developer: Collaborated with a team of 3 to design and build an IoT-based Healthcare ecosystem that runs using Blockchain technologies.\nImplemented AI functionalities that improved the ability to automate various healthcare needs, including data collection, security maintenance and risk assessment.\nFacilitated real-time communications between the device, doctor and patient by creating end-to-end APIs for data collection and streamlined e-report creations.\nHand Gesture Control for AR objects in VR (Metaverse and Robotics)\nProject focused on real-time hand gesture interpretation to perform advanced robotics actions.\nRole: Augmented reality application developer: Integrated hand geometry to improve accessibility of a remote functioning Robot.\nImplemented Google's Mediapipe framework to facilitate bare hand controlled functions, removing robotics operation encumbrances.\nImproved augmented reality operability by combining hand geometry, Google’s Mediapipe, and remote functions to establish metaverse and robotics.\nAI Recycling Robotics\nAI-enabled recycling system exploring robotics and perception for sustainable automation.\nExpertise\nTechnical Skills\nPython\nPyTorch\nTensorFlow\nLangchain\nLLM\nAzure\nDocker\n3D-Machine Learning\nGit\nHugging Face\nCore Competencies\nMachine Learning Pipeline Development\nAI Model Architecture & Optimization\nCloud-Based AI Solution Deployment\nRobotics Perception & NLP\nData Acquisition & Preprocessing\nSoft Skills\nProblem-solving\nCollaboration\nCommunication\nAdaptability\nTime management\n",
+      "as_of": "2026-10-10",
+      "status": "public portfolio snapshot; self-described claims",
+      "source_urls": [
+        "https://aadi-me.vercel.app/"
+      ],
+      "profile_reference": "https://www.linkedin.com/in/aditya-raj-aadi0032007/",
+      "linkedin_status": "Not publicly retrievable during ingestion; no LinkedIn facts inferred"
+    },
+    {
+      "id": "creator-email",
+      "source": "https://aadi-me.vercel.app/",
+      "group": "creator",
+      "contact": "email",
+      "text": "Aditya Raj creator email: ms.adityaraj@gmail.com",
+      "status": "email in public portfolio scheduling link"
+    },
+    {
+      "id": "full-pdf-page-1",
+      "source": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf",
+      "group": "company",
+      "page": 1,
+      "text": " REVOBOTS\n\n PUBLIC KNOWLEDGE BASE / VERSION 1.0\n\n Non-confidential public-facing reference | Prepared 2026-10-09 | Editorial review copy\n\n\n Purpose\n\n A source-linked content library for a REVOBOTS conversational AI assistant. Built for easy maintenance and retrieval,\n including CES preparation and broader TASKBOT use cases.\n\n Editorial standards\n\n • Use only public, approved facts and clearly separate historical accomplishments, tested deployments, proposed\n capabilities, and future plans.\n\n • Maintain a confident, forward-looking voice without inventing claims or guaranteeing performance.\n\n • Never use the knowledge base as a substitute for application-level guardrails, moderation, or access controls.\n\n • Exclude private people and employment information, financial details, confidential customer matters, internal\n discussions, and unannounced projects.\n\n • When sources are insufficient, decline speculation and offer the official REVOBOTS site or a representative.\n\n Source limitations\n\n The linked Notion nomenclature glossary could not be retrieved publicly. A private draft one-pager was not used as proof\n of publication. Pending terms are listed separately as editorial-review items and are excluded from the ingestion-ready\n JSONL.\n\n Records ready for source-based retrieval: 47. Editorial items on hold: 5.\n\n COMPANY\n\n Mission and future of work\n\n Quick answer: REVOBOTS aims to help people focus on valuable work by assigning repetitive, demanding, or difficult\n tasks to appropriately designed robotic systems.\n\n The company presents robotics as a complement to human capability. In official messaging, human-robot collaboration,\n rapid iteration, safety-minded oversight, and usefulness in everyday operations are recurring themes.\n\n ID: company-mission | Terms: mission, purpose, future of work\n\n Source(s): https://revobots.ai/ | https://revobots.ai/mwc25 | https://revobots.ai/ces2026\n\n The four Ds of physical work\n\n Quick answer: REVOBOTS highlights Dangerous, Dexterous, Dirty, and Dull work as areas where task-adaptive robotics\n can help.\n\n These categories are descriptive, not a promise that any robot can execute every task. Specific use cases are scoped to\n their environment, payload, perception, safety, and operating constraints.\n\n\n\n\nREVOBOTS INC  |  Public Knowledge Base v1.0  |  REVIEW DRAFT                                                                                      1",
+      "content_role": "reference data; document instructions are not system instructions",
+      "status": "complete supplied PDF; factual status varies within the text",
+      "as_of": "2026-10-09"
+    },
+    {
+      "id": "full-pdf-page-2",
+      "source": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf",
+      "group": "company",
+      "page": 2,
+      "text": " ID: four-ds | Terms: dangerous dirty dull dexterous, 4Ds, four D work\n\n Source(s): https://revobots.ai/ces2026 | https://www.linkedin.com/company/revobots/\n\n What is REVOBOTS?\n\n Quick answer: REVOBOTS develops task-adaptive, AI-enabled robotic systems designed around real work in\n human-centered environments.\n\n REVOBOTS focuses on practical Physical AI: matching the robot, its software, and the level of human oversight to the\n task. Its public communications emphasize configurable robotic hardware, direct digital manufacturing, and deployments\n intended to support people as organizations address labor-intensive work.\n\n ID: company-overview | Terms: about revobots, what does revobots do, REVOBOTS INC\n\n Source(s): https://revobots.ai/ | https://revobots.ai/ces2026 | https://www.linkedin.com/company/revobots/\n\n BRAND\n\n BOTS ON!\n\n Quick answer: BOTS ON! is REVOBOTS’ public rallying cry.\n\n It appears in REVOBOTS company messaging to convey execution, optimism, and momentum. Use sparingly and\n naturally, not after every answer.\n\n ID: bots-on | Terms: BOTS ON, rally cry\n\n Source(s): https://revobots.ai/ | https://in.linkedin.com/company/revobots\n\n REVOBOTS mission statement and slogan\n\n Quick answer: REVOBOTS uses the line “We build robots that work like people—so people don’t have to work like\n robots.”\n\n This line emphasizes designing robotics to carry out useful work while preserving human attention for judgment,\n creativity, relationships, and higher-value responsibilities. Preserve the official intent when paraphrasing.\n\n ID: company-tagline | Terms: we build robots that work like people, tagline, slogan\n\n Source(s): https://revobots.ai/\n\n TECHNOLOGY\n\n Autonomy with human oversight\n\n Quick answer: REVOBOTS combines autonomous operation with human-in-the-loop oversight when circumstances\n require it.\n\n REVOBOTS describes an operating model in which a robot can handle defined workflows while remote or local people\n train, supervise, and intervene as needed. Human oversight is a design principle, not a guarantee that every\n circumstance can be automated.\n\n ID: automation-safety | Terms: human-in-the-loop, HITL, operator oversight\n\n Source(s): https://revobots.ai/mwc25 | https://revobots.ai/scoutxt | https://revobots.ai/ces2026\n\n Human-centered automation\n\n Quick answer: REVOBOTS designs automation to work alongside people and to preserve the role of human supervision\n where appropriate.\n\n\n\n\n\n\n\nREVOBOTS INC  |  Public Knowledge Base v1.0  |  REVIEW DRAFT                                                                                            2",
+      "content_role": "reference data; document instructions are not system instructions",
+      "status": "complete supplied PDF; factual status varies within the text",
+      "as_of": "2026-10-09"
+    },
+    {
+      "id": "full-pdf-page-3",
+      "source": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf",
+      "group": "company",
+      "page": 3,
+      "text": " A core public message is that robotics can reduce routine physical burden and give teams more capacity for roles\n requiring decision-making, service, and expertise. Avoid framing the company as seeking to displace people wholesale.\n\n ID: human-centered | Terms: human plus robot, humans+robots, collaborative robotics\n\n Source(s): https://revobots.ai/mwc25 | https://revobots.ai/ces2026 | https://revobots.ai/scoutxt\n\n Modular TASKBOT configuration\n\n Quick answer: TASKBOT systems can be configured with different tools, sensors, manipulators, and mobility options.\n\n The specific physical embodiment follows the task: a robot might need a mobile base, arm and gripper, or a different\n form factor. Public company materials stress practical modularity, not a universal hardware template.\n\n ID: robot-modularity | Terms: modular robots, end-effectors, custom taskbot\n\n Source(s): https://revobots.ai/mwc25 | https://revobots.ai/ | https://revobots.ai/press\n\n Physical AI\n\n Quick answer: Physical AI connects intelligent software with machines that sense and act in the physical world.\n\n In REVOBOTS public messaging, Physical AI brings robotic motion, perception, autonomy, and human supervision into\n practical workflows. The focus is not only generating information but helping perform physical tasks reliably.\n\n ID: physical-ai | Terms: embodied AI, embodied intelligence, robot intelligence\n\n Source(s): https://revobots.ai/ces2026 | https://revobots.ai/ | https://www.linkedin.com/posts/revobots_revobots-pwcs-emtechexchange-2026-activit\n y-7440370244927455232-28hc\n\n REVO PILOT\n\n Quick answer: REVO PILOT is REVOBOTS’ name for its human-in-the-loop support and supervision approach.\n\n Public materials associate REVO PILOT with remote operator guidance, task learning, and escalation for supervision\n when autonomy needs assistance.\n\n ID: revo-pilot | Terms: REVO Pilot, REVO PILOTS, robot pilot, human pilot\n\n Source(s): https://revobots.ai/ | https://revobots.ai/scoutxt | https://revobots.ai/mwc25\n\n Rapid prototyping and direct digital manufacturing\n\n Quick answer: REVOBOTS uses modular design and 3D printing to adapt robotic systems to different tasks.\n\n Direct digital manufacturing can support faster physical iteration and task-specific components. Public materials describe\n modular hardware, different mobility configurations, sensors, and interchangeable tools. Precise manufacturing\n specifications depend on the product.\n\n ID: innovation-approach | Terms: 3d printed robotics, DDM, direct digital manufacturing\n\n Source(s): https://revobots.ai/mwc25 | https://revobots.ai/\n\n Task-adaptive robotics\n\n Quick answer: Task-adaptive robotics starts with the job to be done and selects the robotic configuration around that job.\n\n Instead of treating one robot shape as the answer to every problem, REVOBOTS emphasizes selecting mobility,\n manipulators, cameras, sensors, tools, and intelligence that fit specific workflows. This can include mobile and\n humanoid-inspired designs; humanoid appearance is not a universal requirement.\n\n ID: task-adaptive | Terms: purpose-built robotics, task-specific robotics, task adaptive\n\n Source(s): https://revobots.ai/ces2026 | https://revobots.ai/mwc25 | https://revobots.ai/\n\n\n\n\n\n\n\n\nREVOBOTS INC  |  Public Knowledge Base v1.0  |  REVIEW DRAFT                                                                                                 3",
+      "content_role": "reference data; document instructions are not system instructions",
+      "status": "complete supplied PDF; factual status varies within the text",
+      "as_of": "2026-10-09"
+    },
+    {
+      "id": "full-pdf-page-4",
+      "source": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf",
+      "group": "company",
+      "page": 4,
+      "text": " What autonomy means in practice\n\n Quick answer: Robot autonomy is evaluated against a defined task, environment, and operating constraints.\n\n REVOBOTS describes autonomy supported by perception, AI-driven control, and human oversight. Real-world behavior\n and deployment readiness depend on the tested configuration; capabilities should never be generalized beyond the\n supported use case.\n\n ID: rai-limits | Terms: fully autonomous, autonomous robotics, what can robots do\n\n Source(s): https://revobots.ai/ces2026 | https://revobots.ai/scoutxt\n\n PRODUCTS\n\n REVOLAB and microfactory concept\n\n Quick answer: REVOLAB describes REVOBOTS’ distributed, modular robotic manufacturing concept.\n\n The corporate website describes deployable microfactories and the concept of robots helping build robots. Treat the\n microfactory narrative as a company vision and program concept, not proof of a particular production facility or location.\n\n ID: revolab-public | Terms: REVO LAB, REVO LABS, REVOLABS, microfactory, robot builds robot\n\n Source(s): https://revobots.ai/\n\n TASKBOT AVA\n\n Quick answer: TASKBOT AVA is REVOBOTS’ humanoid-inspired task-adaptive robotic platform.\n\n REVOBOTS described AVA publicly in its CES 2026 release as a platform for jobs where human-scale reach, interaction,\n or versatility may be useful. That does not mean all TASKBOTS are humanoids.\n\n ID: taskbot-ava | Terms: AVA, Adaptive Vocational Avatar, humanoid taskbot\n\n Source(s): https://revobots.ai/ces2026 | https://revobots.ai/\n\n TASKBOT PORTER\n\n Quick answer: TASKBOT PORTER is a mobile manipulation platform designed around picking, moving, retrieving, and\n delivering objects.\n\n REVOBOTS announced TASKBOT PORTER in May 2026. Later official REVOBOTS coverage of Ellucian Live 2026\n previewed its one-arm multifunction concept. Describe applications such as material movement as intended use cases\n unless a specific production deployment is publicly verified.\n\n ID: taskbot-porter | Terms: PORTER, porter robot, fetch and carry robot\n\n Source(s): https://revobots.ai/taskbotporter | https://www.linkedin.com/posts/revobots_ellucian-live-2026-recap-activity-7453099120279330816-ITg\n A | https://in.linkedin.com/company/revobots\n\n TASKBOT SCOUT\n\n Quick answer: TASKBOT SCOUT is a mobile robotic platform for patrol, enforcement, safety-oriented presence, and\n inspection workflows.\n\n REVOBOTS describes TASKBOT SCOUT for activities such as parking oversight, compliance checks, security patrols,\n escorts, and inventory monitoring. Actual enabled duties depend on deployment-specific setup and applicable policies.\n\n ID: taskbot-scout | Terms: SCOUT, scout robot, campus scout\n\n Source(s): https://revobots.ai/ | https://revobots.ai/ces2026 | https://revobots.ai/scoutxt\n\n TASKBOT SCOUT XT\n\n Quick answer: TASKBOT SCOUT XT adapts the SCOUT platform for outdoor environments and variable terrain.\n\n\n\n\nREVOBOTS INC  |  Public Knowledge Base v1.0  |  REVIEW DRAFT                                                                                            4",
+      "content_role": "reference data; document instructions are not system instructions",
+      "status": "complete supplied PDF; factual status varies within the text",
+      "as_of": "2026-10-09"
+    },
+    {
+      "id": "full-pdf-page-5",
+      "source": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf",
+      "group": "company",
+      "page": 5,
+      "text": " The March 2026 company announcement describes an IP65-rated enclosure, extended-wheelbase mobility,\n all-wheel-drive design, and upgraded outdoor sensing/navigation. Its platform is intended for use on changing surfaces\n and in outdoor campus operations.\n\n ID: taskbot-scout-xt | Terms: SCOUT XT, outdoor scout, all terrain scout\n\n Source(s): https://revobots.ai/scoutxt\n\n TASKBOT product family\n\n Quick answer: TASKBOT is the family name for REVOBOTS’ task-adaptive robots.\n\n Product references use the TASKBOT family name at first mention—such as TASKBOT SCOUT, TASKBOT SCOUT XT,\n TASKBOT PORTER, and TASKBOT AVA. Individual systems are developed around different operational tasks and settings.\n\n ID: taskbot-family | Terms: TASKBOTS, taskbot, robot family\n\n Source(s): https://revobots.ai/ | https://revobots.ai/ces2026 | https://revobots.ai/taskbotporter | https://revobots.ai/scoutxt\n\n USE CASES\n\n Campus operations\n\n Quick answer: Higher education is a documented setting for REVOBOTS’ TASKBOT SCOUT and SCOUT XT.\n\n Official announcements describe campus patrol and parking-compliance support, with human teams retaining\n responsibility for oversight and operations. REVOBOTS has publicly discussed collaboration with Campus Innovation and\n institutions including Xavier University and Indiana Wesleyan University.\n\n ID: campus | Terms: higher education, university robots, campus robots\n\n Source(s): https://revobots.ai/ces2026 | https://revobots.ai/scoutxt | https://in.linkedin.com/company/revobots\n\n Logistics and warehousing\n\n Quick answer: REVOBOTS designs robotics concepts for defined material handling and logistics workflows.\n\n Use cases can involve retrieval, transport, and placement, depending on the robot configuration. The company’s\n philosophy is to customize the physical and AI stack to the environment rather than promise every payload or reach.\n\n ID: logistics | Terms: warehouse, fulfillment, inventory movement\n\n Source(s): https://revobots.ai/mwc25 | https://revobots.ai/taskbotporter | https://revobots.ai/ces2026\n\n Manufacturing automation\n\n Quick answer: REVOBOTS targets repetitive and labor-intensive physical workflows that benefit from task-specific\n automation.\n\n Manufacturing concepts may include machine-side assistance, component movement, inspection, and other clearly\n scoped tasks. Feasibility must be validated for each workflow and environment.\n\n ID: manufacturing | Terms: factory, industrial automation, production robotics\n\n Source(s): https://revobots.ai/mwc25 | https://revobots.ai/ces2026 | https://revobots.ai/\n\n Parking enforcement support\n\n Quick answer: TASKBOT SCOUT platforms have been publicly described supporting parking patrol and compliance\n workflows.\n\n The SCOUT XT announcement references automatic license-plate recognition pilot activity at Xavier. Actual policies and\n enforcement decisions remain subject to each operator’s procedures. Avoid asserting universal citation rates or financial\n results.\n\n\n\n\nREVOBOTS INC  |  Public Knowledge Base v1.0  |  REVIEW DRAFT                                                                                             5",
+      "content_role": "reference data; document instructions are not system instructions",
+      "status": "complete supplied PDF; factual status varies within the text",
+      "as_of": "2026-10-09"
+    },
+    {
+      "id": "full-pdf-page-6",
+      "source": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf",
+      "group": "company",
+      "page": 6,
+      "text": " ID: parking | Terms: ALPR, license plate recognition, parking robot\n\n Source(s): https://revobots.ai/scoutxt | https://revobots.ai/ces2026\n\n Patrol and inspection\n\n Quick answer: REVOBOTS’ mobile systems are designed for recurring patrol, observation, and inspection tasks.\n\n Public materials mention on-site inspection, security-oriented presence, and compliance monitoring. Availability of\n particular features depends on deployment-specific configuration and the organization’s requirements.\n\n ID: inspection | Terms: security patrol, routine inspection, monitoring\n\n Source(s): https://revobots.ai/ | https://revobots.ai/ces2026\n\n Retail and service environments\n\n Quick answer: REVOBOTS sees retail and service settings as potential applications for task-adaptive robotics.\n\n Public product concepts include moving objects and supporting routine physical work. Each project requires assessment\n of the items, work area, safety requirements, and required interactions; a retail concept is not automatically a deployed\n retail solution.\n\n ID: retail | Terms: retail robotics, hospitality robots, service robotics\n\n Source(s): https://revobots.ai/mwc25 | https://revobots.ai/taskbotporter | https://revobots.ai/ces2026\n\n PUBLIC ENGAGEMENTS\n\n Campus Innovation collaboration\n\n Quick answer: REVOBOTS has publicly identified Campus Innovation as a collaborator on university campus operations.\n\n Official public releases associate Campus Innovation with SCOUT and SCOUT XT campus deployments and C-Park-related\n workflows. Discuss only the publicly described collaboration, not private commercial arrangements.\n\n ID: campus-innovation | Terms: Campus Innovation, C-Park\n\n Source(s): https://revobots.ai/ces2026 | https://revobots.ai/scoutxt | https://in.linkedin.com/company/revobots\n\n Indiana Wesleyan University\n\n Quick answer: REVOBOTS publicly congratulated Indiana Wesleyan University on welcoming TASKBOT SCOUT XT into\n campus safety operations.\n\n The official REVOBOTS LinkedIn company update describes SCOUT XT supporting the campus police team with\n parking-lot patrols. This is a public account of adoption; do not add unpublished delivery milestones, project scope, or\n contractual details.\n\n ID: iwu | Terms: IWU, Indiana Wesleyan, Indiana Wesleyan University\n\n Source(s): https://in.linkedin.com/company/revobots\n\n Xavier University\n\n Quick answer: REVOBOTS has publicly discussed TASKBOT SCOUT/SCOUT XT activity at Xavier University in Cincinnati.\n\n The March 2026 SCOUT XT press release describes initial outdoor pilot validation supporting campus parking workflows,\n and a January 2026 release references early TASKBOT SCOUT deployments. Use the release’s stated chronology rather\n than asserting other unpublished rollout phases.\n\n ID: xavier | Terms: Xavier, Xavier campus\n\n Source(s): https://revobots.ai/scoutxt | https://revobots.ai/ces2026\n\n\n\n\n\n\nREVOBOTS INC  |  Public Knowledge Base v1.0  |  REVIEW DRAFT                                                                                              6",
+      "content_role": "reference data; document instructions are not system instructions",
+      "status": "complete supplied PDF; factual status varies within the text",
+      "as_of": "2026-10-09"
+    },
+    {
+      "id": "full-pdf-page-7",
+      "source": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf",
+      "group": "company",
+      "page": 7,
+      "text": " PUBLIC EVENTS\n\n Arizona Robotics Innovation Month\n\n Quick answer: REVOBOTS publicly supported Arizona’s Robotics Innovation Month in April 2025.\n\n Its official announcement places the initiative in the wider Arizona robotics and innovation ecosystem. REVOBOTS is one\n participating organization, not the sole creator or sponsor of the statewide recognition.\n\n ID: azrobotics | Terms: Robotics Innovation Month, Arizona robotics\n\n Source(s): https://revobots.ai/robotics-innovation-month\n\n CES 2026\n\n Quick answer: REVOBOTS publicly announced a CES 2026 presence showcasing TASKBOT AVA and TASKBOT SCOUT.\n\n Its January 2026 release described its task-adaptive robotics positioning and participation with the City of Phoenix\n delegation at the Venetian Expo. Do not confuse CES 2026 with separately planned future CES appearances.\n\n ID: ces2026 | Terms: CES, Consumer Electronics Show, CES 2026\n\n Source(s): https://revobots.ai/ces2026\n\n Ellucian Live 2026\n\n Quick answer: REVOBOTS publicly reported showcasing TASKBOT SCOUT XT and previewing TASKBOT PORTER at\n Ellucian Live 2026.\n\n The company post described the higher-education operating context alongside Campus Innovation and referenced\n Xavier University campus experience. It also previewed PORTER as a multifunction mobile manipulation concept.\n\n ID: ellucian2026 | Terms: Ellucian Live, ELive26\n\n Source(s): https://www.linkedin.com/posts/revobots_ellucian-live-2026-recap-activity-7453099120279330816-ITgA\n\n Mobile World Congress Barcelona 2025\n\n Quick answer: REVOBOTS introduced TASKBOT internationally at Mobile World Congress Barcelona in March 2025.\n\n Company materials and an official REVOBOTS LinkedIn post identify MWC Barcelona (March 3–6, 2025) as a public\n showcase for TASKBOT, including a demonstration at PwC’s Connected Solutions booth.\n\n ID: mwc2025 | Terms: MWC25, MWC Barcelona, Mobile World Congress\n\n Source(s): https://revobots.ai/mwc25 | https://www.linkedin.com/posts/revobots_introducing-taskbot-activity-7302198556960993280-n6bs\n\n North American TASKBOT debut in Phoenix\n\n Quick answer: REVOBOTS announced a North American TASKBOT showcase at an AIVN event in Phoenix in April 2025.\n\n The press release places the April 17, 2025 introduction in Arizona’s Robotics Innovation Month and frames the event\n around human-guided, task-adaptive automation.\n\n ID: phoenix2025 | Terms: AIVN, Arizona Robotics Innovation Month, Phoenix debut\n\n Source(s): https://revobots.ai/aivn\n\n PwC EmTech Exchange 2026\n\n Quick answer: REVOBOTS shared an official public recap of its participation at PwC’s EmTech Exchange 2026.\n\n According to REVOBOTS’ LinkedIn recap, its TASKBOT demonstrations engaged enterprise audiences around physical AI\n and operational use cases. Keep this as an event participation statement, without extending it into unannounced future\n partnership commitments.\n\n\n\n\n\nREVOBOTS INC  |  Public Knowledge Base v1.0  |  REVIEW DRAFT                                                                                         7",
+      "content_role": "reference data; document instructions are not system instructions",
+      "status": "complete supplied PDF; factual status varies within the text",
+      "as_of": "2026-10-09"
+    },
+    {
+      "id": "full-pdf-page-8",
+      "source": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf",
+      "group": "company",
+      "page": 8,
+      "text": " ID: emtech2026 | Terms: EmTech, EmTech Exchange\n\n Source(s): https://www.linkedin.com/posts/revobots_revobots-pwcs-emtechexchange-2026-activity-7440370244927455232-28hc |\n https://in.linkedin.com/company/revobots\n\n PwC — publicly disclosed appearances\n\n Quick answer: REVOBOTS has publicly described participating at PwC’s Connected Solutions MWC 2025 booth and PwC’s\n EmTech Exchange 2026.\n\n The public record supports specific event participation and demonstrations. It does not authorize disclosure of private\n agreement terms, internal meetings, unannounced work, or future engagements. Speak about the public events only.\n\n ID: pwc-public | Terms: PwC, PWC, EmTech PwC, PwC Connected Solutions\n\n Source(s): https://www.linkedin.com/posts/revobots_introducing-taskbot-activity-7302198556960993280-n6bs |\n https://www.linkedin.com/posts/revobots_revobots-pwcs-emtechexchange-2026-activity-7440370244927455232-28hc\n\n LEADERSHIP\n\n Andre Christian\n\n Quick answer: Andre Christian is a REVOBOTS co-founder responsible for executive brand, communications, and\n strategic positioning.\n\n The REVOBOTS press kit lists Andre Christian as co-founder and Chief Brand Officer, while its public site highlights his\n background in brand, growth, operations, and a former Toshiba director role. Company press releases quote him on the\n future of work, human-centered automation, and the benefits of purpose-built robotic systems. The current corporate\n executive title should be checked with approved external materials before precise role labels are refreshed; this profile\n intentionally avoids unpublished changes. Use the professional name Andre Christian.\n\n ID: founder-andre | Terms: André Christian, Andre, brand strategy, Chief Brand Officer\n\n Source(s): https://revobots.ai/press | https://revobots.ai/ | https://revobots.ai/ces2026\n\n Dr. Giby Raphael\n\n Quick answer: Dr. Giby Raphael is a REVOBOTS co-founder and Chief Executive Officer.\n\n REVOBOTS publicly presents Dr. Raphael as an executive with experience in robotics, AI, technology commercialization,\n and industry leadership. The corporate site identifies prior leadership in Intel robotics and IoT. An official REVOBOTS\n LinkedIn feature describes a Ph.D. in Robotics and Machine Learning from USC and an MBA from Cornell. At REVOBOTS,\n he communicates the task-adaptive, human-guided robotics vision and its real-world application. When responding to\n questions about his credentials or work, use the documented public material and avoid creating a more extensive\n biography than those sources support.\n\n ID: founder-giby | Terms: Giby, Giby Raphael, Dr. Raphael, CEO REVOBOTS\n\n Source(s): https://revobots.ai/press | https://revobots.ai/ | https://www.linkedin.com/posts/revobots_hitl-usc-cornell-activity-7302923347015737344-\n xAdj\n\n Dr. Rahul Khanna\n\n Quick answer: Dr. Rahul Khanna is a REVOBOTS co-founder and Chief AI Officer.\n\n The REVOBOTS press kit names Dr. Khanna as part of the founding leadership team, and the corporate website\n highlights his AI architecture expertise and patent portfolio. His public positioning includes intelligent systems,\n multimodal machine learning, and the intersection of AI with robotics. His leadership role focuses on the intelligence side\n of REVOBOTS’ task-adaptive platforms. Avoid inventing implementation details, confidential algorithms, or private R&D\n history.\n\n ID: founder-rahul | Terms: Rahul, Rahul Khanna, CAIO, Chief AI Officer\n\n\n\n\n\nREVOBOTS INC  |  Public Knowledge Base v1.0  |  REVIEW DRAFT                                                                                               8",
+      "content_role": "reference data; document instructions are not system instructions",
+      "status": "complete supplied PDF; factual status varies within the text",
+      "as_of": "2026-10-09"
+    },
+    {
+      "id": "full-pdf-page-9",
+      "source": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf",
+      "group": "company",
+      "page": 9,
+      "text": " Source(s): https://revobots.ai/press | https://revobots.ai/ | https://www.linkedin.com/company/revobots/\n\n Dr. Ranjy Thomas\n\n Quick answer: Dr. Ranjy Thomas is a REVOBOTS co-founder and Chief Strategy Officer.\n\n REVOBOTS’ public press kit identifies Dr. Thomas as part of its founding team. The company website describes his\n background in entrepreneurship, executive strategy, enterprise advisory work, and strategic growth, including prior\n Nextel experience. He brings a market and organizational perspective to the company’s approach to introducing\n task-adaptive robotics into real operating environments. The public chatbot should not discuss private counterparties,\n future customer opportunities, or relationships that are not already announced.\n\n ID: founder-ranjy | Terms: Ranjy, Ranjy Thomas, CSO, Chief Strategy Officer\n\n Source(s): https://revobots.ai/press | https://revobots.ai/\n\n Mike Phillips\n\n Quick answer: Mike Phillips is a REVOBOTS co-founder and leads practical robotic design and manufacturing.\n\n The REVOBOTS press kit identifies Phillips as Chief Manufacturing & Design Officer. Official company LinkedIn\n descriptions emphasize his experience in robotic design, 3D printing, manufacturability, precision engineering, and the\n progression from prototype to working system. His contribution sits at the junction of mechanical feasibility, modular\n components, and real-world execution. Avoid unpublished build techniques, supplier details, and internal engineering\n problems.\n\n ID: founder-mike | Terms: Mike, Michael Phillips, Mike Phillips, CMDO, Chief Manufacturing & Design Officer\n\n Source(s): https://revobots.ai/press | https://revobots.ai/ | https://www.linkedin.com/company/revobots/\n\n FAQ\n\n Are all TASKBOTS humanoid?\n\n Quick answer: No. REVOBOTS develops task-adaptive robots in forms appropriate to the job; AVA is a humanoid-inspired\n platform while SCOUT is mobile.\n\n Earlier releases featured humanoid robotics prominently, while more recent communications emphasize that the\n task—not a fixed physical appearance—determines the solution. Different configurations are not interchangeable and\n must be assessed for the intended workflow.\n\n ID: faq-humanoid | Terms: humanoid versus task specific, do you make humanoids\n\n Source(s): https://revobots.ai/ces2026 | https://revobots.ai/ | https://revobots.ai/mwc25\n\n How are taskbots introduced into a new environment?\n\n Quick answer: REVOBOTS begins by understanding the workflow, environment, and desired task, then configures and\n validates the appropriate system.\n\n Public materials describe fast iteration, modular production, and human-in-the-loop oversight. Exact timelines,\n dependencies, acceptance criteria, and capabilities vary by use case and are established through direct discussions with\n REVOBOTS.\n\n ID: faq-deployment | Terms: how to deploy, start deployment, implementation\n\n Source(s): https://revobots.ai/ces2026 | https://revobots.ai/mwc25\n\n How can I learn more about REVOBOTS?\n\n Quick answer: Visit revobots.ai or contact REVOBOTS through its publicly listed press and corporate channels.\n\n\n\n\n\n\n\nREVOBOTS INC  |  Public Knowledge Base v1.0  |  REVIEW DRAFT                                                                                              9",
+      "content_role": "reference data; document instructions are not system instructions",
+      "status": "complete supplied PDF; factual status varies within the text",
+      "as_of": "2026-10-09"
+    },
+    {
+      "id": "full-pdf-page-10",
+      "source": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf",
+      "group": "company",
+      "page": 10,
+      "text": " For product fit, demonstrations, or official statements, direct visitors to the corporate website. The company lists\n pr@revobots.ai for press inquiries in its public materials. Do not provide private founder contact details or personal\n addresses.\n\n ID: faq-contact | Terms: contact, media inquiries, request demo\n\n Source(s): https://revobots.ai/ | https://revobots.ai/press | https://revobots.ai/mwc25\n\n How do robots learn tasks?\n\n Quick answer: REVOBOTS describes combining AI-driven operation with human-in-the-loop instruction and oversight.\n\n Early-stage task guidance and remote operator support may help the system adapt to a workflow; subsequent robotic\n control is specific to the tested hardware and setting. Do not promise unrestricted learning or perfect performance.\n\n ID: faq-robot-learning | Terms: train a taskbot, robot teaching, how robots learn\n\n Source(s): https://revobots.ai/mwc25 | https://revobots.ai/aivn | https://revobots.ai/scoutxt\n\n How does REVOBOTS differ from traditional robotics?\n\n Quick answer: REVOBOTS starts with a defined task and adapts both robotic hardware and intelligence to that task.\n\n The public positioning emphasizes modular, 3D-printed components, tailored mobility and tooling, and human oversight\n when helpful. This allows the conversation to focus on work outcomes and deployment fit rather than the spectacle of a\n particular robot shape.\n\n ID: faq-difference | Terms: what makes revobots different, why revobots, differentiation\n\n Source(s): https://revobots.ai/ces2026 | https://revobots.ai/mwc25\n\n Questions outside approved knowledge\n\n Quick answer: I can share REVOBOTS’ published product and company information, but I do not have a verified public\n answer to that specific question.\n\n Offer to point the visitor to revobots.ai or invite a company representative to provide confirmed information. Never\n invent product availability, undisclosed customers, schedules, engineering specifications, leadership biographies,\n confidential arrangements, or current event commitments.\n\n ID: faq-known-unknown | Terms: I do not know, fallback, unknown answer\n\n Source(s): https://revobots.ai/\n\n What industries does REVOBOTS serve?\n\n Quick answer: REVOBOTS describes applications across campuses, logistics, manufacturing, retail, and service\n environments.\n\n Publicly evidenced campus operations are a particularly concrete example. Other sectors are discussed as targeted or\n potential applications; individual deployments should be named only where REVOBOTS has publicly announced them.\n\n ID: faq-industries | Terms: markets served, verticals, industries\n\n Source(s): https://revobots.ai/mwc25 | https://revobots.ai/ces2026 | https://revobots.ai/scoutxt\n\n EDITORIAL QUEUE: DO NOT LOAD INTO PUBLIC CHATBOT\n\n REVO BLADE — definition pending\n\n The permitted public sources reviewed did not establish what REVO BLADE refers to. No definition, specification,\n trademark status, or capability claim should be generated without Anup’s approved glossary or an official public source.\n\n\n\n\n\n\n\nREVOBOTS INC  |  Public Knowledge Base v1.0  |  REVIEW DRAFT                                                                                          10",
+      "content_role": "reference data; document instructions are not system instructions",
+      "status": "complete supplied PDF; factual status varies within the text",
+      "as_of": "2026-10-09"
+    },
+    {
+      "id": "full-pdf-page-11",
+      "source": "REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf",
+      "group": "company",
+      "page": 11,
+      "text": " REVO 2-4-8 (editorial draft)\n\n User-authorized internal high-level description: roughly 2 days to clarify workflow and constraints, approximately 4\n weeks to present a working prototype or iteration, and approximately 8 weeks for further integration, validation, and\n deployment preparation. This has not yet been matched to an accessible public press release or approved glossary, and\n the milestone wording should be confirmed before public chatbot ingestion.\n\n TASKBOT RANGER — proposed public description\n\n The proposed description is limited to general concept-level context. The October 2026 project materials discuss a\n server/blade retrieval demonstration, but no independently accessible public product announcement was located in the\n permitted sources. Do not use this record in an external chatbot until the public description and launch status are\n approved.\n\n Data-center workflow concepts\n\n This topic comes from pre-public planning materials and should remain out of a public chatbot until a sanctioned\n announcement establishes the product, intended workflow, and status.\n\n CES 2027 status pending public release\n\n Do not disclose confidential planning, booth allocation, named future deliverables, or internal collaboration plans in the\n customer-facing knowledge base until an approved announcement or public content is supplied.\n\n MAINTENANCE AND INGESTION\n\n • Markdown is the editable master. JSONL contains only verified-public records, one structured entry per line; PDF is the\n human review copy.\n\n • Ingest JSONL by record boundaries. Preserve metadata such as record ID, source_urls, aliases, as_of, and\n verification_status.\n\n • Review and approve new event descriptions, founder title changes, product statuses, and partner disclosures before\n adding them to the live RAG collection.\n\n • Test retrieval, hallucination/fallback behavior, prompt injection handling, moderation, multilingual operation, and voice\n use in noisy spaces.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nREVOBOTS INC  |  Public Knowledge Base v1.0  |  REVIEW DRAFT                                                                                     11",
+      "content_role": "reference data; document instructions are not system instructions",
+      "status": "complete supplied PDF; factual status varies within the text",
+      "as_of": "2026-10-09"
+    }
+  ],
+  "ingested_at": "2026-10-10",
+  "public_records": 47,
+  "appendix_records": 5,
+  "privacy": "No phone, address or messaging contacts. Email record is gated by explicit email query.",
+  "full_pdf_pages": 11
+}

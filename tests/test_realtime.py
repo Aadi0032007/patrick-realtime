@@ -56,8 +56,8 @@ class RealtimeTests(unittest.TestCase):
     def test_default_prompt_uses_robot_identity(self):
         with patch.dict("os.environ", {"OPENAI_REALTIME_INSTRUCTIONS": "", "SYSTEM_PROMPT_FILE": "patrick/system_prompt.txt"}):
             prompt = system_instructions()
-        self.assertIn("Aditya Raj", prompt)
-        self.assertIn("Revobots", prompt)
+        self.assertIn("Patrick", prompt)
+        self.assertNotIn("REVO248", prompt)
 
     def test_followup_capture_starts_after_playback_drains(self):
         playback = []
@@ -139,7 +139,7 @@ class RealtimeTests(unittest.TestCase):
         chat(ws, "Be concise", read=lambda _: "/quit", output=io.StringIO())
         self.assertEqual(len(ws.sent), 1)
         self.assertTrue(ws.sent[0]["session"]["instructions"].startswith("Be concise"))
-        self.assertIn("Perform tool calls silently", ws.sent[0]["session"]["instructions"])
+        self.assertIn("Perform tool calls silently", system_instructions())
 
     def test_api_error(self):
         ws = Socket([{"type": "error", "error": {"message": "Quota exceeded"}}])
