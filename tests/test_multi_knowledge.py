@@ -9,6 +9,21 @@ class CombinedKnowledgeTests(unittest.TestCase):
     def setUp(self):
         self.kb = KnowledgeBase(INDEX)
 
+    def test_selected_name_is_used_in_rag_identity_and_creator(self):
+        kb = KnowledgeBase(INDEX, name='scout')
+        results = kb.retrieve('Scout creator Aditya')
+        self.assertTrue(any("Scout's creator" in r['text'] for r in results))
+        self.assertNotIn('Patrick', ' '.join(r['text'] for r in results))
+        self.assertTrue(kb.source.startswith('Scout combined'))
+
+    def test_runtime_rename_preserves_sources_and_product_names(self):
+        original = INDEX.read_bytes()
+        kb = KnowledgeBase(INDEX, name='jarvis')
+        results = kb.retrieve('TASKBOT SCOUT')
+        self.assertTrue(any('TASKBOT SCOUT' in r['text'] for r in results))
+        self.assertEqual(INDEX.read_bytes(), original)
+
+
     def test_preserves_sources(self):
         records = json.loads(INDEX.read_text(encoding='utf8'))['records']
         self.assertEqual(sum(r['group'] == 'robot' for r in records), 10)

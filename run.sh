@@ -30,6 +30,7 @@ if [[ ! -f "$PATRICK_VOSK_MODEL/am/final.mdl" ]]; then
   PATRICK_VOSK_MODEL="models/vosk-model-small-en-us-0.15"
 fi
 exec python -m patrick.realtime \
+  --name "${PATRICK_NAME:-Scout}" \
   --vosk-model "$PATRICK_VOSK_MODEL" \
-  --input-device "${PATRICK_INPUT_DEVICE:-0}" \
+  --input-device "${PATRICK_INPUT_DEVICE:-26}" \
   --output-device "${PATRICK_OUTPUT_DEVICE:-0}" "$@"

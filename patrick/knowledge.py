@@ -4,6 +4,7 @@ import json
 import math
 from pathlib import Path
 import re
+from .identity import render_identity
 
 STOP = set("a an the is are was were what who how many much your you my me i it of for to in on and do does can have has tell about please this that with as from".split())
 
@@ -31,15 +32,17 @@ def contact_filter(value, allow_email=False):
 
 
 class KnowledgeBase:
-    def __init__(self, path):
+    def __init__(self, path, name="patrick"):
         data = json.loads(Path(path).read_text(encoding="utf-8"))
-        self.source = data["source"]
+        self.name = name.strip().title()
+        self.source = render_identity(data["source"], self.name)
         self.chunks = []
         self.metadata = []
         records = data.get('records')
         for page in records if records is not None else data["pages"]:
             # Remove repeated page furniture, preserving page provenance.
             text = page["text"] if records is not None else page["text"].split("\n", 2)[-1]
+            text = render_identity(text, self.name)
             words = text.split()
             for start in range(0, len(words), 110):
                 chunk = " ".join(words[start:start + 150])

@@ -3,25 +3,25 @@ import argparse
 import base64
 import json
 import os
-import re
 import sys
 import threading
 from urllib.parse import quote
 
 from .environment import load_env
 from .realtime_playback import AudioPlayback
+from .identity import render_identity
 from pathlib import Path
 
 
 def system_instructions(name="patrick"):
     override = os.getenv("OPENAI_REALTIME_INSTRUCTIONS", "").strip()
     if override:
-        return re.sub(r"\bPatrick\b", lambda match: name.title(), override, flags=re.I)
+        return render_identity(override, name)
     path = Path(__file__).with_name("realtime_prompt.txt")
     prompt = path.read_text(encoding="utf-8").strip()
     if not prompt:
         raise ValueError("System prompt file is empty.")
-    return re.sub(r"\bPatrick\b", lambda match: name.title(), prompt, flags=re.I)
+    return render_identity(prompt, name)
 
 
 def receive(ws):
@@ -40,7 +40,8 @@ def configure(ws, instructions, voice=False, knowledge=None, search=None):
         session["tool_choice"] = "auto"
     if knowledge:
         session["instructions"] += (
-            " For robot, company or creator facts, always call knowledge_search using focused English keywords. "
+            " Answer your own name and basic self-introduction directly from the prompt without tools. "
+            "For other robot, company or creator facts, always call knowledge_search using focused English keywords. "
             "Read its results before deciding whether web search is needed; do not call local and web tools in parallel. "
             "If local excerpts answer the question, answer from them without web search. "
             "Combine relevant matches across all indexed sources, including supplied concepts and drafts.")
@@ -194,8 +195,10 @@ def main():
     parser.add_argument("--input-device", type=int, help="Sounddevice microphone index")
     parser.add_argument("--output-device", type=int, help="Sounddevice speaker index")
     parser.add_argument("--vosk-model", default="models/vosk-model", help="Local Vosk model directory")
-    parser.add_argument("--name", default="patrick", help="Assistant name; default patrick. Enables hey/hi/hello NAME and stop NAME.")
-    parser.add_argument("--wake-phrase", default=None, help="Override the default hey/hi/hello NAME greetings with one custom phrase")
+    parser.add_argument("--name", default="patrick", help="Assistant name; default patrick. Wake on hey/hi/hello, NAME or greeting + NAME; stop on the word stop.")
+    wake_options = parser.add_mutually_exclusive_group()
+    wake_options.add_argument("--wake-up", default=None, help="Wake name; defaults to --name. Accepts the name, hey/hi/hello, and greeting + name")
+    wake_options.add_argument("--wake-phrase", default=None, help="Override all default wake words with one exact custom phrase")
     parser.add_argument("--debug-audio", action="store_true", help="Print local Vosk transcripts and microphone levels")
     parser.add_argument("--listen-test", action="store_true", help="Test microphone, wake phrase, and endpoint locally without OpenAI")
     parser.add_argument("--devices", action="store_true", help="List available audio devices and exit")
@@ -205,7 +208,10 @@ def main():
     args.name = normalize(args.name)
     if not args.name:
         parser.error("--name must contain English letters or numbers")
-    phrases = args.wake_phrase if args.wake_phrase is not None else wake_phrases(args.name)
+    wake_name = normalize(args.wake_up) if args.wake_up is not None else args.name
+    if not wake_name:
+        parser.error("--wake-up must contain English letters or numbers")
+    phrases = args.wake_phrase if args.wake_phrase is not None else wake_phrases(wake_name)
     if isinstance(phrases, str) and not normalize(phrases):
         parser.error("--wake-phrase cannot be empty")
     try:
@@ -229,7 +235,7 @@ def main():
         instructions = system_instructions(args.name)
         from .knowledge import KnowledgeBase
         knowledge_path = args.knowledge or os.getenv("RAG_KNOWLEDGE_FILE", "knowledge/combined.json")
-        knowledge = KnowledgeBase(knowledge_path)
+        knowledge = KnowledgeBase(knowledge_path, name=args.name)
         from .tools import tools_from_env
         search = tools_from_env()
         from .tools import OpenAISearchTools

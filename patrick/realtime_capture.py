@@ -39,16 +39,13 @@ class VoskTurn:
         text = normalize(result.get("text" if final else "partial", ""))
         previous_text = self.last_text
         self.last_text, self.last_final = text, final
-        command = text
         matched = self.wake.match(text)
-        if matched and command.startswith(matched + " "):
-            command = command[len(matched) + 1:]
         # Close locally before command audio is sent to OpenAI.
-        if (self.active or matched) and command == self.stop_phrase:
+        if "stop" in text.split():
             self.reset()
             raise ConversationStopped(f'Conversation closed. Say "{self.wake.phrase}" to reopen it.')
         if not self.active:
-            if not self.wake.detect(text):
+            if not matched:
                 return None
             self.active = True
             self.chunks = list(self.pre_roll)
@@ -56,7 +53,7 @@ class VoskTurn:
             self.chunks.append(pcm)
         self.duration += len(pcm) / (self.rate * 2)
         self.idle += len(pcm) / (self.rate * 2)
-        content = text.partition(matched)[2].strip() if matched else text
+        content = self.wake.content(text)
         if content:
             if not self.question:
                 self.chunks = list(self.pre_roll)
@@ -107,7 +104,7 @@ def capture_turn(sd, model, recognizer_factory, input_device, wake_phrase, debug
 
     phrases = ' / '.join(gate.wake.phrases)
     print(f'Listening locally. Say {phrases} and your question. Ctrl+C exits.' if require_wake
-          else f'Conversation open. Ask a follow-up; say "{gate.stop_phrase}" to close (or wait 15 seconds idle).', flush=True)
+          else f'Conversation open. Ask a follow-up; say "stop" or "{gate.stop_phrase}" to close (or wait 15 seconds idle).', flush=True)
     with sd.RawInputStream(samplerate=24000, channels=1, dtype="int16", blocksize=480,
                            device=input_device, callback=capture):
         announced = not require_wake

@@ -11,7 +11,8 @@ def wake_phrases(name="patrick"):
     name = normalize(name)
     if not name:
         raise ValueError("Name must contain English letters or numbers.")
-    return tuple(f"{greeting} {name}" for greeting in ("hey", "hi", "hello"))
+    greetings = ("hey", "hi", "hello")
+    return tuple(f"{greeting} {name}" for greeting in greetings) + greetings + (name,)
 
 
 class PhraseWakeDetector:
@@ -28,6 +29,17 @@ class PhraseWakeDetector:
 
     def detect(self, text: str) -> bool:
         return self.match(text) is not None
+
+    def content(self, text):
+        content = normalize(text)
+        # Greeting/name sequences are wake-only, not completed questions.
+        while content:
+            prefix = next((phrase for phrase in self.phrases
+                           if content == phrase or content.startswith(phrase + " ")), None)
+            if prefix is None:
+                break
+            content = content[len(prefix):].strip()
+        return content
 
 
 class Endpoint:

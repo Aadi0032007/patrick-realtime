@@ -24,14 +24,43 @@ class RealtimeTests(unittest.TestCase):
              patch('patrick.realtime.load_env'), \
              patch('patrick.realtime_capture.listen_test') as listen:
             main()
-        self.assertEqual(listen.call_args.args[2], ('hey jarvis', 'hi jarvis', 'hello jarvis'))
+        self.assertEqual(listen.call_args.args[2], ('hey jarvis', 'hi jarvis', 'hello jarvis', 'hey', 'hi', 'hello', 'jarvis'))
         self.assertEqual(listen.call_args.kwargs['name'], 'jarvis')
+
+    def test_wake_up_argument_selects_wake_name(self):
+        from patrick.realtime import main
+        with patch('sys.argv', ['patrick.realtime', '--name', 'Scout', '--wake-up', 'Scout', '--listen-test']), \
+             patch('patrick.realtime.load_env'), \
+             patch('patrick.realtime_capture.listen_test') as listen:
+            main()
+        phrases = listen.call_args.args[2]
+        self.assertIn('scout', phrases)
+        self.assertIn('hey', phrases)
+        self.assertIn('hello scout', phrases)
+        self.assertNotIn('patrick', phrases)
+        self.assertEqual(listen.call_args.kwargs['name'], 'scout')
 
     def test_custom_name_changes_prompt_identity(self):
         with patch.dict('os.environ', {'OPENAI_REALTIME_INSTRUCTIONS': ''}):
             prompt = system_instructions('jarvis')
         self.assertIn('You are Jarvis', prompt)
         self.assertNotIn('You are Patrick', prompt)
+
+    def test_name_applies_to_prompt_and_knowledge_in_main(self):
+        from patrick.realtime import main
+        with patch('sys.argv', ['patrick.realtime', '--name', 'Scout', '--text']), \
+             patch.dict('os.environ', {'OPENAI_API_KEY': 'test-key', 'WEB_SEARCH_ENABLED': 'false',
+                                      'RAG_KNOWLEDGE_FILE': 'knowledge/combined.json', 'OPENAI_REALTIME_INSTRUCTIONS': ''}), \
+             patch('patrick.realtime.load_env'), \
+             patch('websockets.sync.client.connect'), \
+             patch('patrick.realtime.chat') as chat_mock:
+            main()
+        self.assertIn('You are Scout', chat_mock.call_args.args[1])
+        self.assertEqual(chat_mock.call_args.kwargs['knowledge'].name, 'Scout')
+
+    def test_legacy_environment_prompt_uses_selected_name(self):
+        with patch.dict('os.environ', {'OPENAI_REALTIME_INSTRUCTIONS': 'You are Patrick. Patrick is a robot.'}):
+            self.assertEqual(system_instructions('scout'), 'You are Scout. Scout is a robot.')
 
     def test_web_and_pdf_tools_are_both_available(self):
         from patrick.tools import OpenAISearchTools

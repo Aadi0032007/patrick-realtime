@@ -33,7 +33,7 @@ class VoskTurnTests(unittest.TestCase):
                 self.assertEqual(gate.feed(b"bb"), b"aabb")
 
     def test_custom_name_replaces_default_and_stop(self):
-        gate = VoskTurn(Recognizer([(True, "hello patrick"), (True, "hi jarvis"),
+        gate = VoskTurn(Recognizer([(True, "patrick"), (True, "hi jarvis"),
                                    (False, "stop jarvis")]), name="jarvis")
         self.assertIsNone(gate.feed(b"aa"))
         self.assertFalse(gate.active)
@@ -66,9 +66,10 @@ class VoskTurnTests(unittest.TestCase):
         with self.assertRaises(ConversationStopped):
             gate.feed(b"aa")
 
-    def test_question_mentioning_stop_is_not_a_close_command(self):
+    def test_stop_word_anywhere_closes_locally(self):
         gate = VoskTurn(Recognizer([(True, "what does stop patrick mean")]), require_wake=False)
-        self.assertEqual(gate.feed(b"aa"), b"aa")
+        with self.assertRaises(ConversationStopped):
+            gate.feed(b"aa")
 
     def test_microphone_level(self):
         self.assertEqual(pcm_level(bytes(960)), 0)
@@ -92,10 +93,40 @@ class VoskTurnTests(unittest.TestCase):
         self.assertEqual(gate.feed(b"dd"), b"aabbccdd")
 
     def test_requires_whole_wake_phrase(self):
-        gate = VoskTurn(Recognizer([(True, "patrick"), (True, "they patrick"), (True, "hey patrickson")]))
+        gate = VoskTurn(Recognizer([(True, "patrickson"), (True, "high"), (True, "helloworld")]))
         for _ in range(3):
             self.assertIsNone(gate.feed(b"aa"))
         self.assertFalse(gate.active)
+
+    def test_bare_words_and_names_wake_without_sending_greeting_only(self):
+        for name in ('scout', 'patrick', 'jarvis'):
+            for wake in ('hey', 'hi', 'hello', name, f'hey {name}', f'hi {name}', f'hello {name}', f'hey hello hi {name}'):
+                with self.subTest(name=name, wake=wake):
+                    gate = VoskTurn(Recognizer([(True, wake), (True, 'tell me a joke')]), name=name)
+                    self.assertIsNone(gate.feed(b'aa'))
+                    self.assertTrue(gate.active)
+                    self.assertEqual(gate.feed(b'bb'), b'aabb')
+
+    def test_bare_wake_with_question_returns_audio(self):
+        for wake in ('hey', 'hi', 'hello', 'scout'):
+            gate = VoskTurn(Recognizer([(True, wake + ' tell me a joke')]), name='scout')
+            self.assertEqual(gate.feed(b'aa'), b'aa')
+
+    def test_stop_and_stop_name_work_without_wake(self):
+        for command in ('stop', 'stop scout', 'please stop', 'hey scout stop scout'):
+            gate = VoskTurn(Recognizer([(False, command)]), name='scout', require_wake=False)
+            with self.assertRaises(ConversationStopped):
+                gate.feed(b'aa')
+            self.assertFalse(gate.active)
+            self.assertEqual(gate.chunks, [])
+
+    def test_stop_is_a_whole_word(self):
+        gate = VoskTurn(Recognizer([(True, 'tell me about a stopwatch')]), require_wake=False)
+        self.assertEqual(gate.feed(b'aa'), b'aa')
+
+    def test_followup_mentioning_name_is_not_lost(self):
+        gate = VoskTurn(Recognizer([(True, 'tell me about scout')]), name='scout', require_wake=False)
+        self.assertEqual(gate.feed(b'aa'), b'aa')
 
     def test_timeout_discards_incomplete_audio_and_resets(self):
         gate = VoskTurn(Recognizer([(True, "hey patrick"), (False, "")]), rate=1)
@@ -128,7 +159,7 @@ class VoskTurnTests(unittest.TestCase):
         self.assertIsNotNone(gate.feed(b"cc"))
 
     def test_next_turn_requires_another_wake_phrase(self):
-        gate = VoskTurn(Recognizer([(True, "hey patrick hello"), (True, "another question")]))
+        gate = VoskTurn(Recognizer([(True, "hey patrick tell me a joke"), (True, "another question")]))
         self.assertEqual(gate.feed(b"aa"), b"aa")
         self.assertIsNone(gate.feed(b"bb"))
         self.assertFalse(gate.active)
