@@ -13,7 +13,7 @@ Environment=HOME=/home/elephant
 Environment=PYTHONUNBUFFERED=1
 Environment=PATRICK_CONDA_ENV=chatbot
 Environment=PATRICK_NAME=Scout
-Environment=PATRICK_INPUT_DEVICE=26
+Environment=PATRICK_INPUT_DEVICE=Shure
 Environment=PATRICK_OUTPUT_DEVICE=0
 ExecStart=/home/elephant/aditya/patrick-realtime/run.sh
 Restart=on-failure

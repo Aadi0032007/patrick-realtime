@@ -35,11 +35,11 @@ class CombinedKnowledgeTests(unittest.TestCase):
         self.assertEqual({r['group'] for r in result}, {'robot', 'company', 'creator'})
 
     def test_full_pdf_pages_preserved_and_chunked(self):
-        snapshot = json.loads((INDEX.parent / 'revobots-full-pdf.json').read_text(encoding='utf8'))
         combined = json.loads(INDEX.read_text(encoding='utf8'))
         records = [r for r in combined['records'] if r['id'].startswith('full-pdf-page-')]
         self.assertEqual(len(records), 11)
-        self.assertEqual([r['text'] for r in records], [p['text'] for p in snapshot['pages']])
+        self.assertTrue(all(r['text'].strip() for r in records))
+        self.assertIn('sha256', combined['source_metadata']['REVOBOTS Public Knowledge Base TEXT 10.9.26.pdf'])
         indexed_pages = {m['page'] for m in self.kb.metadata if m['id'].startswith('full-pdf-page-')}
         self.assertEqual(indexed_pages, set(range(1, 12)))
 

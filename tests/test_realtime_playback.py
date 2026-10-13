@@ -11,6 +11,27 @@ def audio_device(stream):
 
 
 class PlaybackTests(unittest.TestCase):
+    def test_stop_aborts_hardware_and_discards_queued_audio(self):
+        entered, release = threading.Event(), threading.Event()
+        played = []
+        class Speaker:
+            def __init__(self, **kw): pass
+            def __enter__(self): return self
+            def __exit__(self, *args): pass
+            def abort(self): release.set()
+            def write(self, pcm):
+                entered.set()
+                release.wait(1)
+                played.append(pcm)
+        with AudioPlayback(audio_device(Speaker)) as audio:
+            audio.write(b'aa', 'one')
+            self.assertTrue(entered.wait(1))
+            audio.write(b'bb', 'two')
+            audio.cancel()
+            audio.write(b'cc', 'three')
+        self.assertEqual(played, [b'aa'])
+        self.assertTrue(audio.frames.empty())
+
     def test_enqueue_does_not_wait_for_slow_speaker_and_exit_drains(self):
         started, release = threading.Event(), threading.Event()
         played = []

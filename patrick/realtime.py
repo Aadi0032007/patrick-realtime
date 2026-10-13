@@ -24,9 +24,13 @@ def system_instructions(name="patrick"):
     return render_identity(prompt, name)
 
 
-def receive(ws):
-    event = json.loads(ws.recv(timeout=90))
+def receive(ws, timeout=90):
+    event = json.loads(ws.recv(timeout=timeout))
     if event.get("type") == "error":
+        error = event.get('error', {})
+        # Cancellation may race with a response that has already finished.
+        if error.get('event_id') == 'local-stop-cancel' and error.get('code') == 'response_cancel_not_active':
+            return event
         raise RuntimeError(event.get("error", {}).get("message", "Realtime API error"))
     return event
 
@@ -73,7 +77,7 @@ def configure(ws, instructions, voice=False, knowledge=None, search=None):
         pass
 
 
-def continue_tools(ws, response, knowledge, modality, rounds, search=None):
+def continue_tools(ws, response, knowledge, modality, rounds, search=None, cancelled=None):
     calls = [item for item in response.get("output", []) if item.get("type") == "function_call"]
     if not calls:
         return False
@@ -81,8 +85,27 @@ def continue_tools(ws, response, knowledge, modality, rounds, search=None):
         raise RuntimeError("Knowledge search limit reached. Please ask a more specific question.")
     from .knowledge import KnowledgeTools
     tools = KnowledgeTools(knowledge, search) if knowledge else search
+    token = cancelled or threading.Event()
     for call in calls:
-        result = tools.execute(call.get("name"), call.get("arguments", "{}"), threading.Event()) if tools else {"error": "Knowledge search unavailable"}
+        if cancelled is None:
+            result = tools.execute(call.get("name"), call.get("arguments", "{}"), token) if tools else {"error": "Knowledge search unavailable"}
+        else:
+            # Network tools must not hold up local speech interruption. Only this
+            # main thread writes to the WebSocket, even if a tool finishes late.
+            done, outcome = threading.Event(), []
+            def execute(call=call, outcome=outcome, done=done):
+                try:
+                    outcome.append(tools.execute(call.get('name'), call.get('arguments', '{}'), token)
+                                   if tools else {'error': 'Knowledge search unavailable'})
+                except Exception:
+                    outcome.append({'error': 'Tool failed.'})
+                finally:
+                    done.set()
+            if not token.is_set():
+                threading.Thread(target=execute, daemon=True, name='realtime-tool').start()
+                while not done.wait(0.05) and not token.is_set():
+                    pass
+            result = {'error': 'Cancelled by user stop command.'} if token.is_set() else outcome[0]
         from .knowledge import contact_filter, email_requested
         try:
             query = json.loads(call.get("arguments", "{}" )).get("query", "")
@@ -99,6 +122,8 @@ def continue_tools(ws, response, knowledge, modality, rounds, search=None):
                 print(f'\nWeb source: {source.get("title", "")} — {source.get("url", "")}', flush=True)
         ws.send(json.dumps({"type": "conversation.item.create", "item": {
             "type": "function_call_output", "call_id": call["call_id"], "output": json.dumps(result)}}))
+    if token.is_set():
+        return False
     ws.send(json.dumps({"type": "response.create", "response": {"output_modalities": [modality]}}))
     return True
 
@@ -150,7 +175,9 @@ def voice_chat(ws, instructions, input_device=None, output_device=None,
         import sounddevice as sd
     except ImportError:
         raise ValueError('Install audio support: python -m pip install -e ".[realtime,audio]"') from None
-    from .realtime_capture import capture_turn, load_vosk
+    from .realtime_capture import capture_turn, load_vosk, ConversationStopped
+    from .realtime_stop import StopListener
+    from .realtime_voice import play_response
     model, recognizer_factory = load_vosk(vosk_model)
     print("Input:", sd.query_devices(input_device, "input")["name"])
     print("Output:", sd.query_devices(output_device, "output")["name"])
@@ -161,13 +188,16 @@ def voice_chat(ws, instructions, input_device=None, output_device=None,
     print("Connected. AI-generated voice. Use headphones to avoid echo.")
     print("Vosk detects the wake phrase and end of each utterance. Ctrl+C stops.")
     require_wake = True
+    rearm = False
     while True:
         try:
-            audio = capture_turn(sd, model, recognizer_factory, input_device, phrases, debug=debug, require_wake=require_wake, name=name)
+            audio = capture_turn(sd, model, recognizer_factory, input_device, phrases, debug=debug, require_wake=require_wake, name=name, rearm=rearm)
         except TimeoutError as exc:
             print(exc)
             require_wake = True
+            rearm = isinstance(exc, ConversationStopped)
             continue
+        rearm = False
         ws.send(json.dumps({"type": "input_audio_buffer.clear"}))
         for start in range(0, len(audio), 24000):
             ws.send(json.dumps({"type": "input_audio_buffer.append",
@@ -175,27 +205,13 @@ def voice_chat(ws, instructions, input_device=None, output_device=None,
         ws.send(json.dumps({"type": "input_audio_buffer.commit"}))
         ws.send(json.dumps({"type": "response.create", "response": {"output_modalities": ["audio"]}}))
         print(f"{name.title()}: ", end="", flush=True)
-        rounds = 0
         with AudioPlayback(sd, output_device) as speaker:
-            while True:
-                event = receive(ws)
-                kind = event.get("type")
-                if kind == "response.output_audio.delta":
-                    speaker.write(base64.b64decode(event["delta"]))
-                elif kind == "response.output_audio_transcript.delta":
-                    print(event.get("delta", ""), end="", flush=True)
-                elif kind == "response.done":
-                    print()
-                    response = event.get("response", {})
-                    if response.get("status") != "completed":
-                        detail = response.get("status_details") or {}
-                        raise RuntimeError(detail.get("error", {}).get("message", "Audio response did not complete."))
-                    if continue_tools(ws, response, knowledge, "audio", rounds, search=search):
-                        rounds += 1
-                        continue
-                    break
-        # Output stream closes (drains playback) before follow-up capture opens.
-        require_wake = False
+            with StopListener(sd, model, recognizer_factory, input_device, on_stop=speaker.cancel) as listener:
+                stopped = play_response(ws, speaker, listener, knowledge, search)
+        require_wake = stopped
+        rearm = stopped
+        if stopped:
+            print('\nStop heard. Conversation closed; waiting for a fresh wake word.', flush=True)
 
 
 def main():
@@ -213,7 +229,7 @@ def main():
     parser.add_argument("--debug-audio", action="store_true", help="Print local Vosk transcripts and microphone levels")
     parser.add_argument("--listen-test", action="store_true", help="Test microphone, wake phrase, and endpoint locally without OpenAI")
     parser.add_argument("--devices", action="store_true", help="List available audio devices and exit")
-    parser.add_argument("--knowledge", default=None, help="Combined knowledge JSON index; defaults to RAG_KNOWLEDGE_FILE or knowledge/combined.json")
+    parser.add_argument("--knowledge", default=None, help="Knowledge folder or individual reference file; default RAG_KNOWLEDGE_DIR or knowledge/")
     args = parser.parse_args()
     from .endpoint import normalize, wake_phrases
     args.name = normalize(args.name)
@@ -245,7 +261,10 @@ def main():
         model = args.model or os.getenv("OPENAI_REALTIME_MODEL", "gpt-realtime-2.1")
         instructions = system_instructions(args.name)
         from .knowledge import KnowledgeBase
-        knowledge_path = args.knowledge or os.getenv("RAG_KNOWLEDGE_FILE", "knowledge/combined.json")
+        knowledge_path = args.knowledge or os.getenv('RAG_KNOWLEDGE_DIR', '').strip()
+        if not knowledge_path:
+            legacy = Path(os.getenv('RAG_KNOWLEDGE_FILE', 'knowledge'))
+            knowledge_path = legacy.parent if legacy.suffix else legacy
         knowledge = KnowledgeBase(knowledge_path, name=args.name)
         from .tools import tools_from_env
         search = tools_from_env()
@@ -256,6 +275,7 @@ def main():
         from .weather import weather_from_env
         search = weather_from_env(search)
         print(f"Local RAG: {knowledge.source} ({len(knowledge.chunks)} chunks)")
+        print(f'RAG deduplication: {knowledge.duplicate_records} repeated records, {knowledge.duplicate_chunks} repeated chunks skipped.')
         tool_names = {schema['function']['name'] for schema in getattr(search, 'schemas', [])}
         print("Web search:", os.getenv("WEB_SEARCH_PROVIDER", "tavily") if 'web_search' in tool_names else "disabled")
         print("Weather:", "Open-Meteo" if 'weather_lookup' in tool_names else "disabled")

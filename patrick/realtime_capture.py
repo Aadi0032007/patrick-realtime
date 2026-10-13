@@ -34,6 +34,7 @@ class VoskTurn:
         self.idle = 0
 
     def feed(self, pcm):
+        self.wake_event = None
         self.pre_roll.append(pcm)
         final = self.recognizer.AcceptWaveform(pcm)
         result = json.loads(self.recognizer.Result() if final else self.recognizer.PartialResult())
@@ -49,6 +50,7 @@ class VoskTurn:
             if not matched:
                 return None
             self.active = True
+            self.wake_event = matched
             self.chunks = list(self.pre_roll)
         else:
             self.chunks.append(pcm)
@@ -90,7 +92,7 @@ class ConversationStopped(TimeoutError):
     """Local command that returns the voice loop to wake-only mode."""
 
 
-def capture_turn(sd, model, recognizer_factory, input_device, wake_phrase, debug=False, require_wake=True, name="patrick"):
+def capture_turn(sd, model, recognizer_factory, input_device, wake_phrase, debug=False, require_wake=True, name="patrick", rearm=False):
     hardware = device_format(sd, input_device, 'input')
     converter = PCMConverter(hardware.rate, REALTIME_RATE, hardware.channels, 1)
     gate = VoskTurn(recognizer_factory(model, REALTIME_RATE), wake_phrase, require_wake=require_wake, name=name)
@@ -108,13 +110,12 @@ def capture_turn(sd, model, recognizer_factory, input_device, wake_phrase, debug
     phrases = ' / '.join(gate.wake.phrases)
     print(f'Listening locally. Say {phrases} and your question. Ctrl+C exits.' if require_wake
           else f'Conversation open. Ask a follow-up; say "stop" or "{gate.stop_phrase}" to close (or wait 15 seconds idle).', flush=True)
-    print(f'Mic hardware: {hardware.rate} Hz, {hardware.channels} channel(s); Vosk/Realtime: {REALTIME_RATE} Hz mono.', flush=True)
     with sd.RawInputStream(samplerate=hardware.rate, channels=hardware.channels, dtype="int16", blocksize=round(hardware.rate * 0.02),
                            device=input_device, callback=capture):
-        announced = not require_wake
         last_text = ""
         last_meter = time.monotonic()
         peak = 0
+        quiet = 0
         while True:
             if overflow.is_set():
                 raise TimeoutError("Microphone overrun. Discarded the recording; please try again.")
@@ -124,7 +125,16 @@ def capture_turn(sd, model, recognizer_factory, input_device, wake_phrase, debug
                 continue
             if not pcm:
                 continue
+            # Consume the remainder of "stop NAME" before accepting a fresh wake.
+            if rearm:
+                quiet = quiet + len(pcm) / (REALTIME_RATE * 2) if pcm_level(pcm) < 0.01 else 0
+                if quiet >= 0.4:
+                    gate.reset()
+                    rearm = False
+                continue
             audio = gate.feed(pcm)
+            if gate.wake_event:
+                print(f'Wake detected: "{gate.wake_event}". Listening for the end of your sentence…', flush=True)
             if debug:
                 peak = max(peak, pcm_level(pcm))
                 if gate.last_text and gate.last_text != last_text:
@@ -134,9 +144,6 @@ def capture_turn(sd, model, recognizer_factory, input_device, wake_phrase, debug
                     print(f"Mic level: {peak:.4f}" + (" — very quiet; check microphone/mute" if peak < 0.001 else ""), flush=True)
                     peak = 0
                     last_meter = time.monotonic()
-            if gate.active and not announced:
-                print("Wake detected. Listening for the end of your sentence…", flush=True)
-                announced = True
             if audio is not None:
                 return audio
 
@@ -147,14 +154,17 @@ def listen_test(model_path, input_device=None, wake_phrase=None, name="patrick")
     print("Offline microphone/Vosk test. No audio is sent to OpenAI.")
     print("Input:", sd.query_devices(input_device, "input")["name"])
     require_wake = True
+    rearm = False
     while True:
         try:
-            audio = capture_turn(sd, model, recognizer_factory, input_device, wake_phrase, debug=True, require_wake=require_wake, name=name)
+            audio = capture_turn(sd, model, recognizer_factory, input_device, wake_phrase, debug=True, require_wake=require_wake, name=name, rearm=rearm)
             print(f"Turn detected: {len(audio) / 48000:.2f} seconds. Wake and endpoint worked.")
             require_wake = False
+            rearm = False
         except TimeoutError as exc:
             print(exc)
             require_wake = True
+            rearm = isinstance(exc, ConversationStopped)
 
 
 def load_vosk(model_path):

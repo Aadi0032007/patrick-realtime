@@ -1,6 +1,6 @@
 # Scout chatbot system service
 
-The unit is configured for Jetson user `elephant`, project directory `/home/elephant/aditya/patrick-realtime`, Conda environment `chatbot`, Shure input 26 and USB output 0. It starts at boot after network/audio targets and runs as the user with audio-group access. The launcher locates Conda and reads the project's .env through Python.
+The unit is configured for Jetson user `elephant`, project directory `/home/elephant/aditya/patrick-realtime`, Conda environment `chatbot`, a Shure microphone selected by name, and USB output 0. It starts at boot after network/audio targets and runs as the user with audio-group access. The launcher locates Conda and reads the project's .env through Python.
 
 Copy the current project files to Jetson, including `scout_chatbot.service`, `run.sh`, and the updated prompt. Install after the audio fix has been synced and a manual run works:
 
@@ -14,7 +14,7 @@ sudo systemctl enable --now scout_chatbot.service
 sudo systemctl status scout_chatbot.service --no-pager
 ```
 
-Stop any manual Patrick instance before starting the service so both do not open the same microphone/speaker. Audio indices can change after reconnecting devices; check with `python -m patrick.realtime --devices` and edit the unit's PATRICK_INPUT_DEVICE/PATRICK_OUTPUT_DEVICE values if needed. Changing the unit requires daemon-reload and restart.
+Stop any manual Patrick instance before starting the service so both do not open the same microphone/speaker. The launcher resolves PATRICK_INPUT_DEVICE=Shure to the current input index on each start. Missing or ambiguous matches fail clearly rather than silently selecting another microphone. A numeric PATRICK_INPUT_DEVICE or explicit --input-device INDEX overrides selection. Audio output still uses its configured numeric index; check with `python -m patrick.realtime --devices` if hardware is reconnected. Changing the unit requires daemon-reload and restart.
 
 Failed processes restart after five seconds; the start-rate limiter is disabled so repeated startup failures continue retrying. The service can be stopped deliberately without restarting. It does not detect a live-but-hung Python process; no application heartbeat/watchdog is implemented.
 

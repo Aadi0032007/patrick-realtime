@@ -43,7 +43,7 @@ if [ ! -d models/vosk-model ]; then
   mv models/vosk-model-small-en-us-0.15 models/vosk-model
 fi
 test -f models/vosk-model/am/final.mdl
-test -f knowledge/revobots.json
+test -f knowledge/combined.json
 ```
 
 This is the small English model used for the wake phrase and pause-based endpointing. The bundled JSON is the page-numbered extraction of the Revobots reference PDF; the original PDF is not needed at runtime. The model is available from the [official Vosk model list](https://alphacephei.com/vosk/models).
@@ -62,7 +62,7 @@ Set the API key locally and retain these settings:
 OPENAI_API_KEY=your-key-here
 OPENAI_REALTIME_MODEL=gpt-realtime-2.1
 OPENAI_REALTIME_VOICE=cedar
-RAG_KNOWLEDGE_FILE=knowledge/revobots.json
+RAG_KNOWLEDGE_DIR=knowledge
 WEB_SEARCH_ENABLED=true
 WEB_SEARCH_PROVIDER=openai
 WEB_SEARCH_MODEL=gpt-6-luna
@@ -106,7 +106,7 @@ python -m patrick.realtime --input-device "$MIC_INDEX" \
   --output-device "$SPEAKER_INDEX" --debug-audio
 ```
 
-Say **Hey Patrick** to open a conversation. Ask follow-ups without repeating the wake phrase. After 15 seconds of idle listening, the wake phrase is required again. Listening pauses while Patrick generates and plays replies: there is no barge-in. PDF RAG answers Revobots questions; web search handles current public information and prints source links. Ctrl+C exits. Use `--text` to test API/tool behavior without audio devices.
+Say **Hey Patrick** to open a conversation. Ask follow-ups without repeating the wake phrase. After 15 seconds of idle listening, the wake phrase is required again. During replies, Vosk listens locally only for the whole word stop. Stop cancels speech, clears queued audio, and returns to fresh-wake mode; other speech does not interrupt. Wake logs print the matched phrase. PDF RAG answers Revobots questions; web search handles current public information and prints source links. Ctrl+C exits. Use `--text` to test API/tool behavior without audio devices.
 
 For later runs:
 

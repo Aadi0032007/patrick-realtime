@@ -5,6 +5,7 @@ import math
 from pathlib import Path
 import re
 from .identity import render_identity
+from .knowledge_files import load_records, canonical
 
 STOP = set("a an the is are was were what who how many much your you my me i it of for to in on and do does can have has tell about please this that with as from".split())
 
@@ -33,22 +34,43 @@ def contact_filter(value, allow_email=False):
 
 class KnowledgeBase:
     def __init__(self, path, name="patrick"):
-        data = json.loads(Path(path).read_text(encoding="utf-8"))
+        records, self.files = load_records(path)
         self.name = name.strip().title()
-        self.source = render_identity(data["source"], self.name)
+        self.source = f'{self.name} knowledge folder: {len(self.files)} files' if Path(path).is_dir() else render_identity(
+            records[0].get('collection', records[0]['source']), self.name)
         self.chunks = []
         self.metadata = []
-        records = data.get('records')
-        for page in records if records is not None else data["pages"]:
-            # Remove repeated page furniture, preserving page provenance.
-            text = page["text"] if records is not None else page["text"].split("\n", 2)[-1]
+        self.duplicate_records = self.duplicate_chunks = 0
+        unique = {}
+        for page in records:
+            key = (canonical(page['text']), page.get('contact'))
+            reference = {k: v for k, v in page.items() if k != 'text'}
+            if key in unique:
+                self.duplicate_records += 1
+                if reference not in unique[key]['references']:
+                    unique[key]['references'].append(reference)
+            else:
+                unique[key] = {**page, 'references': [reference]}
+        chunk_keys = {}
+        for page in unique.values():
+            text = page["text"]
             text = render_identity(text, self.name)
             words = text.split()
             for start in range(0, len(words), 110):
                 chunk = " ".join(words[start:start + 150])
                 if chunk:
+                    meta = {key: value for key, value in page.items() if key != 'text'}
+                    key = (canonical(chunk), page.get('contact'))
+                    if key in chunk_keys:
+                        self.duplicate_chunks += 1
+                        previous = self.metadata[chunk_keys[key]]
+                        for reference in meta['references']:
+                            if reference not in previous['references']:
+                                previous['references'].append(reference)
+                        continue
+                    chunk_keys[key] = len(self.chunks)
                     self.chunks.append((page.get("page"), chunk, Counter(tokens(chunk))))
-                    self.metadata.append({key: value for key, value in page.items() if key != 'text'} if records is not None else {"source": self.source, "page": page["page"]})
+                    self.metadata.append(meta)
         self.df = Counter(word for _, _, counts in self.chunks for word in counts)
         self.average = sum(sum(c.values()) for _, _, c in self.chunks) / max(1, len(self.chunks))
 

@@ -86,7 +86,7 @@ class RealtimeTests(unittest.TestCase):
     def test_web_and_pdf_tools_are_both_available(self):
         from patrick.tools import OpenAISearchTools
         ws = Socket([{"type": "session.updated"}])
-        configure(ws, "Be concise", knowledge=KnowledgeBase("knowledge/revobots.json"),
+        configure(ws, "Be concise", knowledge=KnowledgeBase("knowledge/combined.json"),
                   search=OpenAISearchTools("test-key"))
         session = ws.sent[0]["session"]
         self.assertEqual({tool["name"] for tool in session["tools"]}, {"web_search", "knowledge_search"})
@@ -103,7 +103,7 @@ class RealtimeTests(unittest.TestCase):
         ws = Socket([])
         response = {"output": [{"type": "function_call", "call_id": "web1", "name": "web_search",
                                  "arguments": '{"query":"latest robotics news"}'}]}
-        self.assertTrue(continue_tools(ws, response, KnowledgeBase("knowledge/revobots.json"), "audio", 0, search=search))
+        self.assertTrue(continue_tools(ws, response, KnowledgeBase("knowledge/combined.json"), "audio", 0, search=search))
         self.assertEqual(search.called, ("web_search", {"query": "latest robotics news"}))
         self.assertEqual(ws.sent[0]["item"]["call_id"], "web1")
         self.assertIn("Fresh news", ws.sent[0]["item"]["output"])
@@ -142,17 +142,21 @@ class RealtimeTests(unittest.TestCase):
             raise KeyboardInterrupt
         sd = types.SimpleNamespace(query_devices=lambda *args: {"name": "test", 'default_samplerate': 24000, 'max_output_channels': 2},
             RawOutputStream=Speaker, PortAudioError=RuntimeError, check_output_settings=lambda **kwargs: None)
+        import threading
+        listener = types.SimpleNamespace(stopped=threading.Event(), check=lambda: False)
         ws = Socket([{"type": "session.updated"},
                      {"type": "response.done", "response": {"status": "completed"}}])
         with patch.dict("sys.modules", {"sounddevice": sd}), \
              patch("patrick.realtime_capture.load_vosk", return_value=(object(), object())), \
+             patch('patrick.realtime_stop.StopListener') as stop_listener, \
              patch("patrick.realtime_capture.capture_turn", side_effect=capture):
+            stop_listener.return_value.__enter__.return_value = listener
             with self.assertRaises(KeyboardInterrupt):
                 voice_chat(ws, "Be concise")
         self.assertEqual(capture_modes, [True, False])
 
     def test_rag_tool_schema_is_realtime_format(self):
-        kb = KnowledgeBase("knowledge/revobots.json")
+        kb = KnowledgeBase("knowledge/combined.json")
         ws = Socket([{"type": "session.updated"}])
         configure(ws, "Be concise", voice=True, knowledge=kb)
         session = ws.sent[0]["session"]
@@ -161,7 +165,7 @@ class RealtimeTests(unittest.TestCase):
         self.assertIn("always call knowledge_search", session["instructions"])
 
     def test_pdf_index_tool_result_resumes_streamed_answer(self):
-        kb = KnowledgeBase("knowledge/revobots.json")
+        kb = KnowledgeBase("knowledge/combined.json")
         call = {"type": "function_call", "name": "knowledge_search", "call_id": "kb1",
                 "arguments": json.dumps({"query": "Revobots cameras"})}
         ws = Socket([{"type": "response.done", "response": {"status": "completed", "output": [call]}},
