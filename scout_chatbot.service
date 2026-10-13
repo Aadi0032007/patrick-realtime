@@ -1,0 +1,28 @@
+[Unit]
+Description=Revobots Scout Voice Assistant
+Wants=network-online.target
+After=network-online.target sound.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=elephant
+SupplementaryGroups=audio
+WorkingDirectory=/home/elephant/aditya/patrick-realtime
+Environment=HOME=/home/elephant
+Environment=PYTHONUNBUFFERED=1
+Environment=PATRICK_CONDA_ENV=chatbot
+Environment=PATRICK_NAME=Scout
+Environment=PATRICK_INPUT_DEVICE=26
+Environment=PATRICK_OUTPUT_DEVICE=0
+ExecStart=/home/elephant/aditya/patrick-realtime/run.sh
+Restart=on-failure
+RestartSec=5s
+TimeoutStopSec=10s
+KillMode=control-group
+StandardOutput=journal
+StandardError=journal
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target
