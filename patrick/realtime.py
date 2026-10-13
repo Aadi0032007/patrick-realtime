@@ -46,12 +46,21 @@ def configure(ws, instructions, voice=False, knowledge=None, search=None):
             "If local excerpts answer the question, answer from them without web search. "
             "Combine relevant matches across all indexed sources, including supplied concepts and drafts.")
     if search:
+        if any(schema["function"]["name"] == "weather_lookup" for schema in search.schemas):
+            session["instructions"] += (
+                " Use weather_lookup for weather, not RAG or web search. Do not assume user location. "
+                "Clarify ambiguous cities and summarize only returned weather values.")
+            session["instructions"] += (
+                " If no city is named, call weather_lookup with an empty location to use the configured default."
+                if getattr(search, 'default_city', '') else
+                " If the user names no city, ask which city before looking up weather.")
         if any(schema["function"]["name"] == "revobots_site_search" for schema in search.schemas):
             session["instructions"] += (
                 " Use revobots_site_search only for details still missing after local retrieval, or explicitly requested live updates.")
-        session["instructions"] += (
-            " Use web_search for other current/uncertain public facts or explicitly requested searches. "
-            "Keep private PDF details out of web queries. If search fails, acknowledge missing live information briefly.")
+        if any(schema["function"]["name"] == "web_search" for schema in search.schemas):
+            session["instructions"] += (
+                " Use web_search for other current/uncertain public facts or explicitly requested searches. "
+                "Keep private PDF details out of web queries. If search fails, acknowledge missing live information briefly.")
     if voice:
         session["audio"] = {
             "input": {"format": {"type": "audio/pcm", "rate": 24000}, "turn_detection": None,
@@ -83,6 +92,8 @@ def continue_tools(ws, response, knowledge, modality, rounds, search=None):
         if call.get("name") == "knowledge_search":
             count = len(result.get("excerpts", []))
             print(f'\nLocal RAG: {count} matching excerpts.', flush=True)
+        if call.get("name") == "weather_lookup":
+            print(f'\nWeather (Open-Meteo): {result.get("status", "unavailable")}.', flush=True)
         if call.get("name") in ("web_search", "revobots_site_search"):
             for source in result.get("sources", result.get("results", [])):
                 print(f'\nWeb source: {source.get("title", "")} — {source.get("url", "")}', flush=True)
@@ -242,8 +253,12 @@ def main():
         if isinstance(search, OpenAISearchTools):
             from .official_search import RevobotsWebTools
             search = RevobotsWebTools(search)
+        from .weather import weather_from_env
+        search = weather_from_env(search)
         print(f"Local RAG: {knowledge.source} ({len(knowledge.chunks)} chunks)")
-        print("Web search:", os.getenv("WEB_SEARCH_PROVIDER", "tavily") if search else "disabled")
+        tool_names = {schema['function']['name'] for schema in getattr(search, 'schemas', [])}
+        print("Web search:", os.getenv("WEB_SEARCH_PROVIDER", "tavily") if 'web_search' in tool_names else "disabled")
+        print("Weather:", "Open-Meteo" if 'weather_lookup' in tool_names else "disabled")
         print(f"Connecting to {model}…", flush=True)
         with connect("wss://api.openai.com/v1/realtime?model=" + quote(model, safe=""),
                      additional_headers={"Authorization": "Bearer " + key},

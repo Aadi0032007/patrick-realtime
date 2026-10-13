@@ -18,6 +18,27 @@ class Socket:
 
 
 class RealtimeTests(unittest.TestCase):
+    def test_weather_registered_with_rag_and_search(self):
+        from patrick.weather import WeatherTools
+        from patrick.tools import OpenAISearchTools
+        from patrick.official_search import RevobotsWebTools
+        ws = Socket([{'type': 'session.updated'}])
+        configure(ws, 'Be concise', knowledge=KnowledgeBase('knowledge/combined.json'),
+                  search=WeatherTools(RevobotsWebTools(OpenAISearchTools('test-key'))))
+        self.assertEqual({t['name'] for t in ws.sent[0]['session']['tools']},
+                         {'knowledge_search', 'web_search', 'revobots_site_search', 'weather_lookup'})
+
+    def test_weather_result_resumes_realtime_without_web(self):
+        from patrick.weather import WeatherTools
+        ws = Socket([])
+        tools = WeatherTools()
+        response = {'output': [{'type': 'function_call', 'name': 'weather_lookup', 'call_id': 'w1',
+                               'arguments': '{"location":""}'}]}
+        self.assertTrue(continue_tools(ws, response, None, 'audio', 0, search=tools))
+        result = json.loads(ws.sent[0]['item']['output'])
+        self.assertEqual(result['status'], 'needs_location')
+        self.assertEqual(ws.sent[1]['response']['output_modalities'], ['audio'])
+
     def test_name_argument_configures_offline_greetings(self):
         from patrick.realtime import main
         with patch('sys.argv', ['patrick.realtime', '--name', 'Jarvis', '--listen-test']), \
