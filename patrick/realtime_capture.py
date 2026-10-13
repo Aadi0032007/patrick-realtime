@@ -9,6 +9,7 @@ import time
 from pathlib import Path
 
 from .endpoint import PhraseWakeDetector, normalize, wake_phrases
+from .audio_format import device_format, PCMConverter, REALTIME_RATE
 
 
 class VoskTurn:
@@ -90,7 +91,9 @@ class ConversationStopped(TimeoutError):
 
 
 def capture_turn(sd, model, recognizer_factory, input_device, wake_phrase, debug=False, require_wake=True, name="patrick"):
-    gate = VoskTurn(recognizer_factory(model, 24000), wake_phrase, require_wake=require_wake, name=name)
+    hardware = device_format(sd, input_device, 'input')
+    converter = PCMConverter(hardware.rate, REALTIME_RATE, hardware.channels, 1)
+    gate = VoskTurn(recognizer_factory(model, REALTIME_RATE), wake_phrase, require_wake=require_wake, name=name)
     frames = queue.Queue(maxsize=100)
     overflow = threading.Event()
 
@@ -105,7 +108,8 @@ def capture_turn(sd, model, recognizer_factory, input_device, wake_phrase, debug
     phrases = ' / '.join(gate.wake.phrases)
     print(f'Listening locally. Say {phrases} and your question. Ctrl+C exits.' if require_wake
           else f'Conversation open. Ask a follow-up; say "stop" or "{gate.stop_phrase}" to close (or wait 15 seconds idle).', flush=True)
-    with sd.RawInputStream(samplerate=24000, channels=1, dtype="int16", blocksize=480,
+    print(f'Mic hardware: {hardware.rate} Hz, {hardware.channels} channel(s); Vosk/Realtime: {REALTIME_RATE} Hz mono.', flush=True)
+    with sd.RawInputStream(samplerate=hardware.rate, channels=hardware.channels, dtype="int16", blocksize=round(hardware.rate * 0.02),
                            device=input_device, callback=capture):
         announced = not require_wake
         last_text = ""
@@ -115,8 +119,10 @@ def capture_turn(sd, model, recognizer_factory, input_device, wake_phrase, debug
             if overflow.is_set():
                 raise TimeoutError("Microphone overrun. Discarded the recording; please try again.")
             try:
-                pcm = frames.get(timeout=0.1)
+                pcm = converter.convert(frames.get(timeout=0.1))
             except queue.Empty:
+                continue
+            if not pcm:
                 continue
             audio = gate.feed(pcm)
             if debug:

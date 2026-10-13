@@ -4,6 +4,12 @@ import unittest
 from patrick.realtime_playback import AudioPlayback
 
 
+def audio_device(stream):
+    return types.SimpleNamespace(RawOutputStream=stream, PortAudioError=RuntimeError,
+        query_devices=lambda *args: {'name': 'test', 'default_samplerate': 24000, 'max_output_channels': 2},
+        check_output_settings=lambda **kwargs: None)
+
+
 class PlaybackTests(unittest.TestCase):
     def test_enqueue_does_not_wait_for_slow_speaker_and_exit_drains(self):
         started, release = threading.Event(), threading.Event()
@@ -17,7 +23,7 @@ class PlaybackTests(unittest.TestCase):
                 if not release.wait(2):
                     raise RuntimeError("Network loop failed to make progress")
                 played.append(pcm)
-        sd = types.SimpleNamespace(RawOutputStream=Speaker)
+        sd = audio_device(Speaker)
         with AudioPlayback(sd) as audio:
             audio.write(b"aa")
             self.assertTrue(started.wait(1))
@@ -35,12 +41,12 @@ class PlaybackTests(unittest.TestCase):
             def __exit__(self, *args): closed.set()
             def write(self, pcm): raise OSError("speaker disconnected")
         with self.assertRaisesRegex(RuntimeError, "speaker disconnected"):
-            with AudioPlayback(types.SimpleNamespace(RawOutputStream=Speaker)) as audio:
+            with AudioPlayback(audio_device(Speaker)) as audio:
                 audio.write(b"aa")
         self.assertTrue(closed.is_set())
 
     def test_audio_buffer_is_bounded(self):
-        audio = AudioPlayback(types.SimpleNamespace(RawOutputStream=lambda **kw: None), max_bytes=2)
+        audio = AudioPlayback(audio_device(lambda **kw: None), max_bytes=2)
         audio.write(b"aa")
         with self.assertRaisesRegex(RuntimeError, "limit reached"):
             audio.write(b"bb")

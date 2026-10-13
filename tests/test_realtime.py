@@ -119,7 +119,8 @@ class RealtimeTests(unittest.TestCase):
                 return b"aa" * 3000
             self.assertEqual(playback, ["playing", "drained"])
             raise KeyboardInterrupt
-        sd = types.SimpleNamespace(query_devices=lambda *args: {"name": "test"}, RawOutputStream=Speaker)
+        sd = types.SimpleNamespace(query_devices=lambda *args: {"name": "test", 'default_samplerate': 24000, 'max_output_channels': 2},
+            RawOutputStream=Speaker, PortAudioError=RuntimeError, check_output_settings=lambda **kwargs: None)
         ws = Socket([{"type": "session.updated"},
                      {"type": "response.done", "response": {"status": "completed"}}])
         with patch.dict("sys.modules", {"sounddevice": sd}), \

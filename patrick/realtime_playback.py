@@ -2,11 +2,15 @@
 import queue
 import threading
 import time
+from .audio_format import device_format, PCMConverter, REALTIME_RATE
 
 
 class AudioPlayback:
     def __init__(self, sd, device=None, max_bytes=48000 * 60):
-        self.stream = sd.RawOutputStream(samplerate=24000, channels=1, dtype="int16", device=device)
+        hardware = device_format(sd, device, 'output')
+        self.converter = PCMConverter(REALTIME_RATE, hardware.rate, 1, hardware.channels)
+        self.stream = sd.RawOutputStream(samplerate=hardware.rate, channels=hardware.channels, dtype="int16", device=device)
+        print(f'Speaker hardware: {hardware.rate} Hz, {hardware.channels} channel(s).', flush=True)
         self.frames = queue.Queue()
         self.max_bytes = max_bytes
         self.buffered = 0
@@ -39,7 +43,9 @@ class AudioPlayback:
                     if self.closing.is_set():
                         return
                     continue
-                self.speaker.write(pcm)
+                converted = self.converter.convert(pcm)
+                if converted:
+                    self.speaker.write(converted)
                 with self.lock:
                     self.buffered -= len(pcm)
         except Exception as exc:
